@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Registros </h3>
+<table>
+   <thead>
+      <tr>
+         <th>colaborador</th>
+         <th>perfilDeTwitter</th>
+         <th>choice</th>
+      </tr>
+   </thead>         
+   <tbody>
+      {% for registro in registros %}
+         <tr>
+            <td>{{ registro.colaborador }}</td>
+            <td>{{ registro.perfilDeTwitter }}</td>
+            <td>{{ registro.choice }}</td>
+         </tr>
+      {% endfor %}
+   </tbody>
+</table>      
+{% endblock %}

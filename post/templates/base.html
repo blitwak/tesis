@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/estilos.css?2">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
+    <meta content="chrome=1,IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, user-scalable=no" name="viewport">
+
+    <link href="https://file.myfontastic.com/t5tNwfwUapz4yDzK3B6sfe/icons.css" rel="stylesheet">
+    <link href="https://file.myfontastic.com/t5tNwfwUapz4yDzK3B6sfe/icons.css" rel="stylesheet">
+
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+     <!--<link rel="icon" href="../../favicon.ico">-->
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/cover.css?29" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/full-width-pics.css">
+
+
+    {% if title %}
+    <title>{{ title }} - Tesis Litwak</title>
+    {% else %}
+    <title>Tesis Litwak</title>
+    {% endif %}
+</head>
+  <body> 
+    <!-- 
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+     -->
+    {% block content %}{% endblock %}
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+
+  </body>
+
+    <footer class="footer">
+        <div class="contenedor">
+            <div class="social">
+                <a href="#" class="icon-facebook"></a>
+                <a href="#" class="icon-twitter"></a>
+                <a href="#" class="icon-gplus"></a>
+            </div>
+        </div>
+    </footer>
+
+</html>

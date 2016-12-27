@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+        <div id="container">
+            <div class="title">
+                <h1>index</h1>
+            </div>
+            <div id="content">
+                <form method="post" action="{{ url_for('jugarPrimeraVez') }}">
+                    <input type="hidden" name="usuario" value={{name}}>
+                    <input type="submit" value="Jugar!" /> 
+                </form>
+            </div>
+        </div>
+{% endblock %}
