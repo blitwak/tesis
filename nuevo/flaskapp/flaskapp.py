@@ -7,7 +7,6 @@ import os.path
 #from flask.ext.pymongo import PyMongo
 #from flask_pymongo import PyMongo
 #from mongokit import Connection, Document
-
 #from flask.ext.mongoalchemy import MongoAlchemy
 from flask_mongoalchemy import MongoAlchemy
 
@@ -19,7 +18,7 @@ from flask_mongoalchemy import MongoAlchemy
 #from boto.dynamodb2.layer1 import DynamoDBConnection
 #from boto.regioninfo import RegionInfo
 app = Flask(__name__)
-puerto = 8501
+puerto = 5000
 app.secret_key = "holamanolacomova"
 #app.SQLALCHEMY_DATABASE_URI = 'sqlite:///students.sqlite3'
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
@@ -42,8 +41,8 @@ global cantPerfilesAmostrar
 cantPerfilesAmostrar = 3
 
 def levantarPerfilesDeTwitter():
-#	filename = "/var/www/twitterAmostrarCopaArgentina.p"
-	filename = "static/bd/twitterAmostrar.p"
+	filename = "/var/www/twitterAmostrarCopaArgentina.p"
+#	filename = "static/bd/twitterAmostrar.p"
 	if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
 		ret = pickle.load(filehandler)
@@ -144,7 +143,7 @@ def yajugue():
 	global dicidTwitterCuentaToVotacion
 	global dicEsclavoToPerfilesAver
 
-	print "YA JUGUE"
+	print "YA jUGUE futbol"
 	print request.form
 	name=request.form['usuario']
 	print name
@@ -156,8 +155,9 @@ def yajugue():
 	print "-------"
 	print asd
 	asd = 2
-	print asd	
-
+	print asd
+	print "-------------------------------------"	
+	print name
 	print dicEsclavoToPerfilesTwitterVistos.keys()
 	asd = dicEsclavoToPerfilesTwitterVistos[name]
 	asd.append(idTwitterCuenta)
@@ -194,4 +194,4 @@ def hello_world():
 if __name__ == '__main__':
 #  db.create_all()
 #  	users = Table.create('elementos', schema=[HashKey('username')]);
-	app.run(port=puerto)
+	app.run()
