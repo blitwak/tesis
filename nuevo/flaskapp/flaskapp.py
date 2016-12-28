@@ -31,13 +31,12 @@ cantPerfilesAmostrar = 3
 
 def levantarPerfilesDeTwitter():
 	filename = "/var/www/twitterAmostrarCopaArgentina.p"
-	print "holaaaaaa"
+#	filename = "static/bd/twitterAmostrarCopaArgentina.p"
 	if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
-		print "entro"
 		ret = pickle.load(filehandler)
-		print "ok"
 		filehandler.close()
+		print "levantada"
 		return ret
 
 #	else:
@@ -96,15 +95,18 @@ def gracias():
 
 @app.route('/jugarPrimeraVez', methods=['POST'])
 def jugarPrimeraVez():
+	global dicEsclavoToPerfilesAver
+	global dicEsclavoToPerfilesTwitterVistos
+	global asd
+	global dicUserToTuplasSeleccionadas
+
 	name=request.form['usuario']
 	perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
 	perfilAenviar = perfiles[0]
 	print perfiles
 	print perfilAenviar
-	global dicEsclavoToPerfilesAver
 	dicEsclavoToPerfilesAver[name]=perfiles[1:]
 	print name
-	global dicEsclavoToPerfilesTwitterVistos
 	msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
 	if name not in dicEsclavoToPerfilesTwitterVistos.keys():
 		dicEsclavoToPerfilesTwitterVistos[name]= []
@@ -115,11 +117,9 @@ def jugarPrimeraVez():
 		print "no grabo"
 	print dicEsclavoToPerfilesTwitterVistos.keys() 
 	print "-------------------------"
-	global asd
 	print asd
 	asd = 1
 	print asd
-	global dicUserToTuplasSeleccionadas
 	if name not in dicUserToTuplasSeleccionadas.keys():
 		dicUserToTuplasSeleccionadas[name]= []
 	return render_template('jugar.html', name=name, perfiles = msg)
@@ -132,6 +132,12 @@ def mostrarTodoRegistro():
 
 @app.route('/yajugue', methods=['POST'])
 def yajugue():
+	global asd
+	global dicEsclavoToPerfilesTwitterVistos
+	global dicUserToTuplasSeleccionadas
+	global dicidTwitterCuentaToVotacion
+	global dicEsclavoToPerfilesAver
+
 	print "YA JUGUE"
 	print request.form
 	name=request.form['usuario']
@@ -142,15 +148,9 @@ def yajugue():
 	print idTwitterCuenta
 	print name
 	print "-------"
-	global asd
 	print asd
 	asd = 2
 	print asd	
-
-	global dicEsclavoToPerfilesTwitterVistos
-	global dicUserToTuplasSeleccionadas
-	global dicidTwitterCuentaToVotacion
-	global dicEsclavoToPerfilesAver
 
 	print dicEsclavoToPerfilesTwitterVistos.keys()
 	asd = dicEsclavoToPerfilesTwitterVistos[name]
