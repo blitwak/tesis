@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<div class="inner" id="menulogueado">
+    <h3 class="masthead-brand" id="daleGracias" ></h3>
+    <nav>
+        <ul class="nav masthead-nav">
+            <li><a href="#">Contact</a></li>
+            <li><a href="/" id="logout">Cerrar sesión</a></li>
+        </ul>
+    </nav>
+</div>
+<header name="imagenGrande" id="imagenGrande" class="image-bg-fluid-height" >
+    <img name="imagenChica" id="imagenChica" class="img-responsive img-center" height="200" width="200" alt="">
+</header>
+
+<input type="hidden" id="cantidadTotalPerfiles" value="">
+<input type="hidden" id="cantidadActualPerfiles" value="">
+<label  hidden id="lblperfiles"> {{perfiles}} </label>
+<input type="hidden" id="cantidadAeeectualPerfiles" value="">
+
+    <p id = "name_datosTwitter"></p>
+    <p id = "screenName_datosTwitter"></p>
+    <p id = "name_datosTwitter"></p>
+    <p id = "desc_datosTwitter"></p>
+    <img src="" id = "banner_datosTwitter" height="42" width="42">
+    <img src="" id = "image_datosTwitter" height="42" width="42">
+    
+    <a class="twitter-timeline" data-lang="es" href="" data-width="400" data-height="300" >screen_name</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+<form method="post" action="/yajugue">
+
+
+    <input type="hidden" id="id_datosTwitter" name="id_datosTwitter">
+    <h2 hidden id="usuario2" name="usuario2">{{name}}</h2>
+    <input type="hidden" id="usuario" name="usuario">
+    <section> De que equipo es?
+        <select id="teams" name="teams">
+            <option value="No se">No se</option>
+            <option value="Ninguno">Ninguno</option>
+            <option value="Boca">Boca</option>
+            <option value="River">River</option>
+            <option value="Racing">Racing</option>
+            <option value="Independiente">Independiente</option>
+            <option value="San Lorenzo">San Lorenzo</option>
+            <option value="Huracan">Huracan</option>
+            <option value="Belgrano">Belgrano</option>
+            <option value="Talleres">Talleres</option>
+            <option value="Rosario central">Rosario central</option>
+            <option value="Newell's">Newell's</option>
+            <option value="Estudiantes de la plata">Estudiantes de la plata</option>
+            <option value="Gimnasia">Gimnasia</option>
+            <option value="Colon">Colon</option>
+            <option value="Velez">Velez</option>
+            <option value="Lanus">Lanus</option>
+            <option value="Banfield">Banfield</option>
+            <option value="Atlético Tucumán">Atlético Tucumán</option>
+            <option value="Temperley">Temperley</option>
+            <option value="Union">Union</option>
+            <option value="Tigre">Tigre</option>
+        </select>
+    </section>
+    <input type="submit" value="Jugar!" /> 
+</form>
+<script src="/static/assets/js/angular.min.js"></script>
+<script src="/static/assets/js/jquery.js"></script>
+<script src="/static/assets/js/bootstrap.min.js"></script>
+<script src="/static/assets/js/anchor-smooth-scroll.js"></script>
+<script src="/static/assets/js/angular-sanitize.min.js"></script> 
+<script src="/static/assets/js/underscore-min.js"></script> 
+<script src="/static/assets/js/ang-accordion.js"></script>  
+<script src="/static/assets/js/dirPagination.js"></script>
+<script src="/static/assets/js/angular-carousel.js"></script> 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="/static/js/post.js"></script>
+<script src="/static/js/fb.js?55" type='text/javascript' ></script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+    $( window ).load(function() 
+    {
+        $('#daleGracias').text("Gracias {{name}}");
+        perfiles = document.getElementById('lblperfiles').innerHTML
+        var result = JSON.parse(perfiles);
+        id_datosTwitter.innerValue = result["id"];
+        var megaUsuario = usuario2.innerHTML
+        usuario.innerValue = megaUsuario;
+        $("#usuario").attr("value",megaUsuario);
+        $("#id_datosTwitter").attr("value", result["id"]);
+        name_datosTwitter.innerText = "Nombre: "+ result["name"];
+        screenName_datosTwitter.innerText = "screenName: "+ result["screenName"];
+        desc_datosTwitter.innerText = "desc: "+ result["desc"];
+        var link = "https://twitter.com/"+result["screenName"];
+        $("a").attr("href", link);
+        $("#banner_datosTwitter").attr("src",result["banner"]);
+        $("#image_datosTwitter").attr("src",result["image"]);
+
+        imageUrl = 'https://scontent-gru2-1.xx.fbcdn.net/v/t1.0-9/11032753_10153671254258812_8859691432262490856_n.jpg?oh=4dcc80c7772363e137bb7dfcc565e607&oe=58DBFB8F';
+   //     imageUrl = result["banner"]
+        var lala = 'transparent url(' + imageUrl + ') no-repeat center center scroll'
+        $("#imagenGrande").css('background', lala);
+ //       imageUrl = result["image"]
+        imageUrl = 'https://pbs.twimg.com/profile_images/753399375444017152/oAPOrRV0.jpg';
+//    var lala = 'transparent url(' + imageUrl + ') no-repeat center center scroll'
+        $("#imagenChica").attr("src",imageUrl);
+
+
+    });
+
+</script>
+{% endblock %}
