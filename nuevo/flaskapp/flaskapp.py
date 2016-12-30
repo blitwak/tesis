@@ -38,11 +38,11 @@ global asd
 asd = 0
 
 global cantPerfilesAmostrar
-cantPerfilesAmostrar = 3
+cantPerfilesAmostrar = 10
 
 def levantarPerfilesDeTwitter():
-	filename = "/var/www/twitterAmostrarCopaArgentina.p"
-#	filename = "static/bd/twitterAmostrar.p"
+#	filename = "/var/www/twitterAmostrarCopaArgentina.p"
+	filename = "static/bd/twitterAmostrar.p"
 	if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
 		ret = pickle.load(filehandler)
@@ -159,18 +159,33 @@ def yajugue():
 	print "-------------------------------------"	
 	print name
 	print dicEsclavoToPerfilesTwitterVistos.keys()
-	asd = dicEsclavoToPerfilesTwitterVistos[name]
-	asd.append(idTwitterCuenta)
-	dicEsclavoToPerfilesTwitterVistos[name] = asd
-	fff = dicUserToTuplasSeleccionadas[name]
-	print "antes de un apend"
-	fff.append([idTwitterCuenta,seleccionEquipo])
-	dicUserToTuplasSeleccionadas[name] = fff
+	print dicUserToTuplasSeleccionadas.keys()
+	print dicidTwitterCuentaToVotacion.keys()
+	print dicEsclavoToPerfilesAver.keys()
+	print idTwitterCuenta
+
+
+#	asd = dicEsclavoToPerfilesTwitterVistos[name]
+#	asd.append(idTwitterCuenta)
+	print "asd"
+	dicEsclavoToPerfilesTwitterVistos[name].append(idTwitterCuenta)
+	print "eee"
+#	dicEsclavoToPerfilesTwitterVistos[name] = asd
+	dicUserToTuplasSeleccionadas[name].append([idTwitterCuenta,seleccionEquipo])
+	print "ttt"
+#	fff = dicUserToTuplasSeleccionadas[name]
+#	print "antes de un apend"
+#	fff.append([idTwitterCuenta,seleccionEquipo])
+#	dicUserToTuplasSeleccionadas[name] = fff
 
 	if (idTwitterCuenta not in dicidTwitterCuentaToVotacion.keys()):
 		dicidTwitterCuentaToVotacion[idTwitterCuenta] = []
+		print "agregado"
 	print idTwitterCuenta
-	dicidTwitterCuentaToVotacion[idTwitterCuenta] = dicidTwitterCuentaToVotacion[idTwitterCuenta].append([name,seleccionEquipo])
+	elementito = [name,seleccionEquipo]
+	print "elementito"
+	dicidTwitterCuentaToVotacion[idTwitterCuenta].append(elementito)
+#	dicidTwitterCuentaToVotacion[idTwitterCuenta] = yyyy
 	print "antes del commit"
 	agregar = registro(colaborador= name ,perfilDeTwitter= idTwitterCuenta,choice=seleccionEquipo)
 	agregar.save()
@@ -183,7 +198,7 @@ def yajugue():
 		msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
 		return render_template('jugar.html', name=name, perfiles = msg)
 	else:
-		return render_template('finJuego.html', user=name, votacion = fff)
+		return render_template('finJuego.html', user=name, votacion = dicUserToTuplasSeleccionadas[name])
 
 
 
