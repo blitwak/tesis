@@ -4,19 +4,8 @@ import json
 import preparar as preparar
 import pickle
 import os.path
-#from flask.ext.pymongo import PyMongo
-#from flask_pymongo import PyMongo
-#from mongokit import Connection, Document
-#from flask.ext.mongoalchemy import MongoAlchemy
 from flask_mongoalchemy import MongoAlchemy
 
-#from flask_sqlalchemy import SQLAlchemy
-#from boto.dynamodb2.fields import HashKey
-#from boto.dynamodb2.table import Table
-#from flask.ext.dynamo import Dynamo
-#import boto3
-#from boto.dynamodb2.layer1 import DynamoDBConnection
-#from boto.regioninfo import RegionInfo
 app = Flask(__name__)
 puerto = 5000
 app.secret_key = "holamanolacomova"
