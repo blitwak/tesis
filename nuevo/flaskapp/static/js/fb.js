@@ -29,19 +29,26 @@ var loginMenu = '<div class="masthead clearfix">' +
         '</div>' +
       '</div>'
 
-var div_session3 = '<div class="inner" id="menulogueado">' +
-          '<h3 class="masthead-brand" id="daleBienvenida" >Tesis</h3>' +
-          '<nav>' +
-            '<ul class="nav masthead-nav">' +
-              '<li class="active"><a href="#" id="comenzarJugar"> Comenzar!</a></li>' +
-              '<li><a href="#">Contact</a></li>' +
-              '<li><a href="#" id="logout">Cerrar sesión</a></li>' +
-            '</ul>' +
-          '</nav>' +
-        '</div>' +
-      '</div>'
+// var div_session3 = '<div class="inner" id="menulogueado">' +
+//           '<h3 class="masthead-brand" id="daleBienvenida" >Tesis</h3>' +
+//           '<nav>' +
+//             '<ul class="nav masthead-nav">' +
+//               '<li class="active"><a href="#" id="comenzarJugar"> Comenzar!</a></li>' +
+//               '<li><a href="#">Contact</a></li>' +
+//               '<li><a href="#" id="logout">Cerrar sesión</a></li>' +
+//             '</ul>' +
+//           '</nav>' +
+//         '</div>' +
+//       '</div>'
 
+var div_session3 = '<li class="active" id="comenzarJugar"><a href="#">Jugar</a></li>' +
+        '<li><a href="#">Algo m&aacute;s?</a></li>' +
+        '<li><a href="#">Contacto</a></li>' +
+        '<li><a href="#" id="logout">Cerrar sesión</a></li>';
 
+var menuOriginal =      '<li class="active" id="login-link"><a href="#"  class="login">Iniciar sesión con facebook</a></li>' +
+    '<li><a href="#">Algo m&aacute;s?</a></li>' +
+    '<li><a href="#">Contacto</a></li>';
 
   window.fbAsyncInit = function() {
 
@@ -77,11 +84,15 @@ var div_session3 = '<div class="inner" id="menulogueado">' +
 
     var getFacebookData =  function() {
       FB.api('/me', function(response) {
-        $('#menulogin').after(div_session3);
-        $('#menulogin').remove();
-        $('#daleBienvenida').text("Bienvenido "+response.name);
-        usuarioLog = response.name;
-        $('#usuario').text(response.name);
+          console.log("hola");
+
+        // $('#menulogin').after(div_session3);
+          var menu= document.getElementById('login-link');
+          menu.innerHTML = div_session3;
+//        $('#menulogin').remove();
+  //      $('#daleBienvenida').text("Bienvenido "+response.name);
+    //    usuarioLog = response.name;
+      //  $('#usuario').text(response.name);
 
       });
     }
@@ -105,8 +116,11 @@ var div_session3 = '<div class="inner" id="menulogueado">' +
       checkLoginState(function(data) {
         if (data.status === 'connected') {
         FB.logout(function(response) {
-          $('#menulogueado').after(loginMenu);
-          $('#menulogueado').remove();
+            var menu = document.getElementById('menu-links');
+            menu.innerHTML = menuOriginal;
+
+          // $('#menulogueado').after(loginMenu);
+          // $('#menulogueado').remove();
            post('/login', {});
 
         })

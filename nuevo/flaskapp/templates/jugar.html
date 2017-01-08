@@ -2,23 +2,19 @@
 {% block content %}
 
 
-<div class="inner" id="menulogueado">
-    <h3 class="masthead-brand" id="daleGracias" ></h3>
-    <nav>
-        <ul class="nav masthead-nav">
-            <li><a href="#">Contact</a></li>
-            <li><a href="/" id="logout">Cerrar sesión</a></li>
-        </ul>
-    </nav>
-</div>
-<header name="imagenGrande" id="imagenGrande" class="image-bg-fluid-height" >
+<!--<div class="inner" id="menulogueado">-->
+    <!--<h3 class="masthead-brand" id="daleGracias" ></h3>-->
+    <!--<nav>-->
+        <!--<ul class="nav masthead-nav">-->
+            <!--<li><a href="#">Contact</a></li>-->
+            <!--<li><a href="/" id="logout">Cerrar sesión</a></li>-->
+        <!--</ul>-->
+    <!--</nav>-->
+<!--</div>-->
+<div name="imagenGrande" id="imagenGrande" class="image-bg-fluid-height" >
     <img name="imagenChica" id="imagenChica" class="img-responsive img-center" height="200" width="200" alt="">
-</header>
+</div>
 
-<input type="hidden" id="cantidadTotalPerfiles" value="">
-<input type="hidden" id="cantidadActualPerfiles" value="">
-<label  hidden id="lblperfiles"> {{perfiles}} </label>
-<input type="hidden" id="cantidadAeeectualPerfiles" value="">
 
     <p id = "name_datosTwitter"></p>
     <p id = "screenName_datosTwitter"></p>
@@ -32,6 +28,12 @@
 
 
 <form method="post" action="/yajugue">
+    <input type="hidden" id="cantidadTotalPerfiles" value="">
+    <input type="hidden" id="cantidadActualPerfiles" value="">
+    <label  hidden id="lblperfiles"> {{perfiles}} </label>
+    <input type="hidden" id="cantidadAeeectualPerfiles" value="">
+
+
 
 
     <input type="hidden" id="id_datosTwitter" name="id_datosTwitter">
@@ -65,20 +67,7 @@
     </section>
     <input type="submit" value="Jugar!" /> 
 </form>
-<script src="/static/assets/js/angular.min.js"></script>
-<script src="/static/assets/js/jquery.js"></script>
-<script src="/static/assets/js/bootstrap.min.js"></script>
-<script src="/static/assets/js/anchor-smooth-scroll.js"></script>
-<script src="/static/assets/js/angular-sanitize.min.js"></script> 
-<script src="/static/assets/js/underscore-min.js"></script> 
-<script src="/static/assets/js/ang-accordion.js"></script>  
-<script src="/static/assets/js/dirPagination.js"></script>
-<script src="/static/assets/js/angular-carousel.js"></script> 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="/static/js/post.js"></script>
-<script src="/static/js/fb.js?55" type='text/javascript' ></script>
-<script type="text/javascript">
-</script>
+<hr style="border:1px solid #bbb; max-width: 70%; margin-top: 15px;"/>
 <script type="text/javascript">
     $( window ).load(function() 
     {
@@ -112,3 +101,4 @@
 
 </script>
 {% endblock %}
+

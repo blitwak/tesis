@@ -1,79 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
 
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        Tesis
-      </a>
-    </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="#" id="login" class="menu__link">Iniciar sesión con facebook</a></li>
-        <li><a href="#">Algo mas?</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<div class="container">
-    <div class=" text-center">
-        <h2>Ayudame a graduarme pronto</h2>
-        <p class="text-primary">
-          Lorem ipsum graduate graduate
-          Lorem ipsum graduate graduate
-          Lorem ipsum graduate graduate
-        </p>
+<div class="header">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Dime quien twittea, y te dir&eacute; de qu&eacute; cuadro es </h1>
+            <hr>
+            <p>El objetivo de esta página web es etiquetar a los usuarios de Twitter con respecto al equipo de fútbol de Argentina que son hinchas para la utilización en una tesis de Licenciatura en Ciencias de la Computación del departamento de computación de la Facultad de Ciencias Exactas y Naturales de la Universidad de Buenos Aires.</p>
+            <a href="#about" class="btn btn-primary btn-xl page-scroll login">Ingresar con Facebook</a>
+        </div>
     </div>
-
 </div>
 
+<section class="bg-dark section-short" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 text-center">
+                <h2 class="section-heading">C&oacute;mo jugar</h2>
+                <hr class="light">
+                <ul class="text-left instructions">
+                    <li>Ingresar con el usuario de Facebook.
+                        <br/><small>Nota: No utilizo, comparto ni almaceno tus datos de ingreso. Lo necesito para ...</small></li>
+                    <li>Paso 2</li>
+                    <li>Paso 3</li>
+                    <li>Paso 4</li>
+                </ul>
 
-
-<div class="site-wrapper">
-  <div class="site-wrapper-inner">
-    <div class="cover-container">
-        <div class="masthead clearfix">
-            <div class="inner" id="menulogin">
-              <h1 class="h3 masthead-brand">Tesis</h1>
-
-
-
+                <p style="margin-top: 15px;"> Cualquier consulta <a href="#contact">contactame</a></p>
             </div>
         </div>
     </div>
-  </div>
+</section>
+
+<section class="section-short" id="mythesis">
+    <div class="container">
+        <div class="col-sm-12">
+            <h2>Sobre mi tesis</h2>
+            <p>
+                La tesis trata sobre ver cómo influyen los resultados de los partidos de fútbol de el equipo favorito en los estado de ánimo del usuario en la red social Twitter, analizando los sentimientos de los tweets: Es un tweet positivo? Negativo?
+            </p>
+            <p>
+                Algunas de las preguntas que queremos responder son, por ejemplo, si en base al resultado de los partidos de fútbol, podemos predecir el estado de humor del hincha. Esto puede servir para saber cuando dar una noticia a los hinchas.
+                Otra pregunta que intentamos responder es si en base al estado de ánimo de los hinchas previo al partido podemos adivinar el resultado del partido de fútbol.  Esto puede servir para realizar un sistema que juegue al prode o realice apuestas en internet.
+            </p>
+            <p>
+                Por ende necesitamos primero reconocer quien es un hincha y de que equipo es.
+                Para esto último, necesitamos su ayuda!
+            </p>
+            <p>
+                Les pedimos que vean perfiles de twitter, y decidan el equipo el cual es hincha en caso de que se pueda reconocer.
+                Muchas gracias!
+            </p>
+        </div>
+    </div>
+</section>
+
+<aside class="bg-dark">
+    <div class="container text-center">
+        <div class="call-to-action">
+            <h2>Estas listo para jugar?</h2>
+            <a href="" class="btn btn-default btn-xl sr-button login">Ingresar con Facebook</a>
+            <a href="/jugarPrimeraVez" class="btn btn-default btn-xl sr-button jugar">jugar</a>
+
+        </div>
+    </div>
+</aside>
 
 
 
-  <!--<div class="site-wrapper-inner">-->
-    <!--<div class="text-center">-->
-      <!--<div class="text-center">-->
-        <!--<h1 class="text-center" >Es facil y divertido!</h1>-->
-        <!--<h4 class="lead">Gracias por ayudar!</h4>-->
-      <!--</div>-->
-        <!--<div class="inner">-->
-          <!--<p>Cualquier consulta por <a href="mailto:brian.litwak@gmail.com?Subject=Contacto" target="_top">mail</a> .</p>-->
-        <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-</div>
 
 
-<input type="hidden" id="usuario" name="usuario">
-
-<!--<script src="/static/assets/js/angular.min.js"></script>-->
-<!--<script src="/static/assets/js/jquery.js"></script>-->
-<!--<script src="/static/assets/js/bootstrap.min.js"></script>-->
-<!--<script src="/static/assets/js/anchor-smooth-scroll.js"></script>-->
-<!--<script src="/static/assets/js/angular-sanitize.min.js"></script> -->
-<!--<script src="/static/assets/js/underscore-min.js"></script> -->
-<!--<script src="/static/assets/js/ang-accordion.js"></script>  -->
-<!--<script src="/static/assets/js/dirPagination.js"></script>-->
-<!--<script src="/static/assets/js/angular-carousel.js"></script> -->
-<script src="/static/js/post.js"></script>
-<script src="/static/js/fb.js?55" type='text/javascript' ></script>
+<input type="hidden" id="usuario" name="usuario" />
 
 {% endblock %}

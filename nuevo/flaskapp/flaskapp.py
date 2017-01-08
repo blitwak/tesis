@@ -87,36 +87,39 @@ def gracias():
 	return render_template('finJuego.html', user=usuario, respuestas= respuestas)
 
 
-@app.route('/jugarPrimeraVez', methods=['POST'])
+@app.route('/jugarPrimeraVez', methods=['POST','GET'])
 def jugarPrimeraVez():
-	global dicEsclavoToPerfilesAver
-	global dicEsclavoToPerfilesTwitterVistos
-	global asd
-	global dicUserToTuplasSeleccionadas
+    global dicEsclavoToPerfilesAver
+    global dicEsclavoToPerfilesTwitterVistos
+    global asd
+    global dicUserToTuplasSeleccionadas
 
-	name=request.form['usuario']
-	perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
-	perfilAenviar = perfiles[0]
-	print perfiles
-	print perfilAenviar
-	dicEsclavoToPerfilesAver[name]=perfiles[1:]
-	print name
-	msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
-	if name not in dicEsclavoToPerfilesTwitterVistos.keys():
-		dicEsclavoToPerfilesTwitterVistos[name]= []
-		print dicEsclavoToPerfilesTwitterVistos.keys()
-		print len(dicEsclavoToPerfilesTwitterVistos)
-		print "grabo"
-	else:
-		print "no grabo"
-	print dicEsclavoToPerfilesTwitterVistos.keys() 
-	print "-------------------------"
-	print asd
-	asd = 1
-	print asd
-	if name not in dicUserToTuplasSeleccionadas.keys():
-		dicUserToTuplasSeleccionadas[name]= []
-	return render_template('jugar.html', name=name, perfiles = msg)
+    print "llego"
+#    name=request.form['usuario']
+    print "no encontro"
+    name = "Maia"
+    perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
+    perfilAenviar = perfiles[0]
+    print perfiles
+    print perfilAenviar
+    dicEsclavoToPerfilesAver[name]=perfiles[1:]
+    print name
+    msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
+    if name not in dicEsclavoToPerfilesTwitterVistos.keys():
+        dicEsclavoToPerfilesTwitterVistos[name]= []
+        print dicEsclavoToPerfilesTwitterVistos.keys()
+        print len(dicEsclavoToPerfilesTwitterVistos)
+        print "grabo"
+    else:
+        print "no grabo"
+    print dicEsclavoToPerfilesTwitterVistos.keys()
+    print "-------------------------"
+    print asd
+    asd = 1
+    print asd
+    if name not in dicUserToTuplasSeleccionadas.keys():
+        dicUserToTuplasSeleccionadas[name]= []
+    return render_template('jugar.html', name=name, perfiles = msg)
 
 
 @app.route('/mostrarTodoRegistro')

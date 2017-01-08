@@ -2,9 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/estilos.css">
-    <link rel="stylesheet" href="/static/css/clean-blog.css">
+
     <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="/static/css/creative.css">
+
+    <!--<link rel="stylesheet" href="/static/css/estilos.css">-->
+
+    <!--<link rel="stylesheet" href="/static/css/clean-blog.css">-->
 
     <!-- Optional theme -->
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
@@ -28,10 +34,12 @@
     <!--<link rel="stylesheet" href="/static/css/full-width-pics.css">-->
 
     <!-- Custom Fonts -->
-    <!--<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
-    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,500italic,600italic,700italic,800italic,500,400,300,600,700,800' rel='stylesheet' type='text/css'>
-
+    <!-- Custom Fonts -->
+    <link href="../static/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!--<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>-->
 
     {% if title %}
     <title>{{ title }} - Tesis Litwak</title>
@@ -39,7 +47,14 @@
     <title>Tesis Litwak</title>
     {% endif %}
 </head>
-<body>
+<body id="page-top">
+    <script src="/static/assets/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+
+    <script src="/static/js/post.js"></script>
+    <script src="/static/js/fb.js?340" type='text/javascript' ></script>
+
     <!-- 
     <hr>
     {% with messages = get_flashed_messages() %}
@@ -52,26 +67,70 @@
     {% endif %}
     {% endwith %}
      -->
-    <div class="bg-container">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Inicio</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right" id="menu-links">
+
+                    <li class="active" id="login-link"><a href="#"  class="login">Iniciar sesión con facebook</a></li>
+                    <li><a href="#">Algo m&aacute;s?</a></li>
+                    <li><a href="#">Contacto</a></li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <div class="">
+
         {% block content %}{% endblock %}
 
     </div>
+
+
+    <section id="contact" class="section-short">
+        <div class="container" role="contentinfo">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Contactame</h2>
+                    <hr class="primary">
+                    <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <i class="fa fa-facebook fa-3x sr-contact"></i>
+                    <p><a href="http://facebook.com/blitwak">http://facebook.com/blitwak</a></p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <i class="fa fa-twitter fa-3x sr-contact"></i>
+                    <p><a href="http://twitter.com/brianRomeo">http://twitter.com/brianRomeo</a></p>
+                </div>
+                <div class="col-sm-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
+                    <p><a href="mailto:blitwak@fcen.uba.ar">blitwak@fcen.uba.ar</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
   </body>
 
-    <footer class="footer">
-        <div class="contenedor">
-            <div class="social">
-                <a href="#" class="icon-facebook"></a>
-                <a href="#" class="icon-twitter"></a>
-                <a href="#" class="icon-gplus"></a>
-            </div>
-        </div>
-    </footer>
+
 
 </html>
