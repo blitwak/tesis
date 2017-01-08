@@ -11,62 +11,145 @@
         <!--</ul>-->
     <!--</nav>-->
 <!--</div>-->
-<div name="imagenGrande" id="imagenGrande" class="image-bg-fluid-height" >
-    <img name="imagenChica" id="imagenChica" class="img-responsive img-center" height="200" width="200" alt="">
+
+<div class="wrapper">
+    <div class="container" >
+        <form method="post" action="/yajugue">
+
+
+            <div class="row" style="background-color: #f2f2f2;padding:15px;">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                        6/10
+                    </div>
+                </div>
+
+                <div class="h2">De qu&eacute; club es la persona de este usuario de twitter? </div>
+                <div class="col-md-5">
+                    <label for="teams">Club:</label>
+                    <select id="teams" name="teams" class="form-control" title="Equipos">
+                        <option value="No se">No se</option>
+                        <option value="Ninguno">Ninguno</option>
+                        <option value="Boca">Boca</option>
+                        <option value="River">River</option>
+                        <option value="Racing">Racing</option>
+                        <option value="Independiente">Independiente</option>
+                        <option value="San Lorenzo">San Lorenzo</option>
+                        <option value="Huracan">Huracan</option>
+                        <option value="Belgrano">Belgrano</option>
+                        <option value="Talleres">Talleres</option>
+                        <option value="Rosario central">Rosario central</option>
+                        <option value="Newell's">Newell's</option>
+                        <option value="Estudiantes de la plata">Estudiantes de la plata</option>
+                        <option value="Gimnasia">Gimnasia</option>
+                        <option value="Colon">Colon</option>
+                        <option value="Velez">Velez</option>
+                        <option value="Lanus">Lanus</option>
+                        <option value="Banfield">Banfield</option>
+                        <option value="Atlético Tucumán">Atlético Tucumán</option>
+                        <option value="Temperley">Temperley</option>
+                        <option value="Union">Union</option>
+                        <option value="Tigre">Tigre</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />
+                </div>
+
+
+            </div>
+
+
+            <div class="row" style="margin-top: 10px;">
+                <div class="banner-img text-left">
+                    <div class="profile-container">
+                        <img  src="../static/temp/profile.jpg" alt="imagen de perfil" class="profile-img" />
+                        <div class="h3">marcelo tinelli
+                        </div>
+                        <div style="color:#888;">@cuervo_tinelli</div>
+                        <div class="profile-text">
+                            Periodista, Conductor de @showmatch y Vicepresidente de @sanlorenzo.
+                        </div>
+
+
+                    </div>
+                </div>
+
+             </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <a class="twitter-timeline" href="https://twitter.com/cuervoTinelli">Tweets by TwitterDev</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p id = "name_datosTwitter"></p>
+                    <p id = "screenName_datosTwitter"></p>
+                    <p id = "name_datosTwitter"></p>
+                    <p id = "desc_datosTwitter"></p>
+                    <img src="" id = "banner_datosTwitter" height="42" width="42">
+                    <img src="" id = "image_datosTwitter" height="42" width="42">
+                </div>
+
+            </div>
+
+
+            <input type="hidden" id="cantidadTotalPerfiles" value="">
+            <input type="hidden" id="cantidadActualPerfiles" value="">
+            <label  hidden id="lblperfiles"> {{perfiles}} </label>
+            <input type="hidden" id="cantidadAeeectualPerfiles" value="">
+
+        </form>
+
+
+        <div class="row" style="background-color: #f2f2f2;padding:15px;">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    6/10
+                </div>
+            </div>
+
+            <div class="h2">De qu&eacute; club es la persona de este usuario de twitter? </div>
+            <div class="col-md-5">
+                <label for="teams2">Club:</label>
+                <select id="teams2" name="teams" class="form-control" title="Equipos">
+                    <option value="No se">No se</option>
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="Boca">Boca</option>
+                    <option value="River">River</option>
+                    <option value="Racing">Racing</option>
+                    <option value="Independiente">Independiente</option>
+                    <option value="San Lorenzo">San Lorenzo</option>
+                    <option value="Huracan">Huracan</option>
+                    <option value="Belgrano">Belgrano</option>
+                    <option value="Talleres">Talleres</option>
+                    <option value="Rosario central">Rosario central</option>
+                    <option value="Newell's">Newell's</option>
+                    <option value="Estudiantes de la plata">Estudiantes de la plata</option>
+                    <option value="Gimnasia">Gimnasia</option>
+                    <option value="Colon">Colon</option>
+                    <option value="Velez">Velez</option>
+                    <option value="Lanus">Lanus</option>
+                    <option value="Banfield">Banfield</option>
+                    <option value="Atlético Tucumán">Atlético Tucumán</option>
+                    <option value="Temperley">Temperley</option>
+                    <option value="Union">Union</option>
+                    <option value="Tigre">Tigre</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="submit" id="submit2" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />
+            </div>
+
+
+        </div>
+
+
+
+    </div>
 </div>
 
 
-    <p id = "name_datosTwitter"></p>
-    <p id = "screenName_datosTwitter"></p>
-    <p id = "name_datosTwitter"></p>
-    <p id = "desc_datosTwitter"></p>
-    <img src="" id = "banner_datosTwitter" height="42" width="42">
-    <img src="" id = "image_datosTwitter" height="42" width="42">
-    
-    <a class="twitter-timeline" data-lang="es" href="" data-width="400" data-height="300" >screen_name</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
-<form method="post" action="/yajugue">
-    <input type="hidden" id="cantidadTotalPerfiles" value="">
-    <input type="hidden" id="cantidadActualPerfiles" value="">
-    <label  hidden id="lblperfiles"> {{perfiles}} </label>
-    <input type="hidden" id="cantidadAeeectualPerfiles" value="">
-
-
-
-
-    <input type="hidden" id="id_datosTwitter" name="id_datosTwitter">
-    <h2 hidden id="usuario2" name="usuario2">{{name}}</h2>
-    <input type="hidden" id="usuario" name="usuario">
-    <section> De que equipo es?
-        <select id="teams" name="teams">
-            <option value="No se">No se</option>
-            <option value="Ninguno">Ninguno</option>
-            <option value="Boca">Boca</option>
-            <option value="River">River</option>
-            <option value="Racing">Racing</option>
-            <option value="Independiente">Independiente</option>
-            <option value="San Lorenzo">San Lorenzo</option>
-            <option value="Huracan">Huracan</option>
-            <option value="Belgrano">Belgrano</option>
-            <option value="Talleres">Talleres</option>
-            <option value="Rosario central">Rosario central</option>
-            <option value="Newell's">Newell's</option>
-            <option value="Estudiantes de la plata">Estudiantes de la plata</option>
-            <option value="Gimnasia">Gimnasia</option>
-            <option value="Colon">Colon</option>
-            <option value="Velez">Velez</option>
-            <option value="Lanus">Lanus</option>
-            <option value="Banfield">Banfield</option>
-            <option value="Atlético Tucumán">Atlético Tucumán</option>
-            <option value="Temperley">Temperley</option>
-            <option value="Union">Union</option>
-            <option value="Tigre">Tigre</option>
-        </select>
-    </section>
-    <input type="submit" value="Jugar!" /> 
-</form>
 <hr style="border:1px solid #bbb; max-width: 70%; margin-top: 15px;"/>
 <script type="text/javascript">
     $( window ).load(function() 
