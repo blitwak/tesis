@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Inicio</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="menu-links">
+                <li class="active" id="login-link"><a href="#"  class="login">Iniciar sesión con facebook</a></li>
+                <li><a href="#comojugar">Cómo jugar?</a></li>
+                <li><a href="#sobre">De que trata la tesis?</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 
 <div class="header">
@@ -15,8 +35,8 @@
     </div>
 </div>
 
-<section class="bg-dark section-short" id="about">
-    <div class="container">
+<section class="bg-dark section-short" id="comojugar" name="comojugar">
+    <div class="container"  id="comojugar2" name="comojugar2">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 text-center">
                 <h2 class="section-heading">C&oacute;mo jugar</h2>
@@ -35,7 +55,7 @@
     </div>
 </section>
 
-<section class="section-short" id="mythesis">
+<section class="section-short" id="sobre">
     <div class="container">
         <div class="col-sm-12">
             <h2>Sobre mi tesis</h2>
@@ -70,10 +90,53 @@
     </div>
 </aside>
 
+<script type="text/javascript">
+    var div_session3 = '<li class="active" id="comenzarJugar"><a href="#">Jugar</a></li>' +
+        '    <li><a href="#comojugar">Cómo jugar?</a></li>'+
+        '   <li><a href="#sobre">De que trata la tesis?</a></li>'+
+        ' <li><a href="#contact">Contacto</a></li>'+
+        '<li><a href="#" id="logout">Cerrar sesión</a></li>';
+
+    var btn_jugar =  '<a href="#" id="btncentral-jugar" class="btn btn-primary btn-xl page-scroll login">Jugar!</a>';
+    var btn_jugar2 =  '<a href="#" id="btnabajo-jugar" class="btn btn-default btn-xl sr-button login">Jugar!</a>'
+
+
+    $( window ).load(function()
+    {
+        console.log("Entramos")
+        var usernameSession = sessionStorage.getItem("SessionName");
+        console.log('Global User: ' + usernameSession);
+
+        if (usernameSession!= null)
+        {
+            console.log('User is not null');
+            var menu= document.getElementById('menu-links');
+            menu.innerHTML = div_session3;
+
+            var menu= document.getElementById('btn-central');
+            menu.innerHTML = btn_jugar;
+
+            var menu= document.getElementById('btn-abajo');
+            menu.innerHTML = btn_jugar2;
+  //          sessionStorage.SessionName = "SessionData";
+//            sessionStorage.setItem("SessionName",response.name);
+    //        var usernameSession = sessionStorage.getItem("SessionName");
+            var texto = "Hola " + usernameSession + "!";
+            $('#saludo').text(texto);
+            var parte = sessionStorage.getItem("parte");//comojugar
+            console.log(parte)
+            if (parte == "comojugar") {
+                document.getElementById("comojugar2").scrollIntoView();
+//                var top = $('#comojugar2').position().top;
+  //              $(window).scrollTop( top );
+            }
+        }
+    });
+
+</script>
 
 
 
-
-<input type="hidden" id="usuario" name="usuario" />
+<!--<input type="hidden" id="usuario" name="usuario" />-->
 
 {% endblock %}

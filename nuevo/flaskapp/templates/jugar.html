@@ -11,6 +11,37 @@
         <!--</ul>-->
     <!--</nav>-->
 <!--</div>-->
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Gracias </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="menu-links">
+
+                <li><a href="#" id = "comojugar2">Cómo jugar?</a></li>
+                <li><a href= "#" id = "sobre2">De que trata la tesis?</a></li>
+                <li><a href="#" id = "contact2">Contacto</a></li>
+                <li><a href="#" id="logout2">Cerrar sesión</a></li>
+
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+
+<script type="text/javascript">
+        $('#saludo').text("Gracias {{name}}!");
+</script>
+
 
 <div class="wrapper">
     <div class="container" >
@@ -154,19 +185,22 @@
 <script type="text/javascript">
     $( window ).load(function() 
     {
-        $('#saludo').text("Gracias {{name}}!");
+        var usernameSession = sessionStorage.getItem("SessionName");
+        console.log("esta guardado?")
+        console.log(usernameSession)
+
         perfiles = document.getElementById('lblperfiles').innerHTML
         var result = JSON.parse(perfiles);
-        id_datosTwitter.innerValue = result["id"];
-        var megaUsuario = usuario2.innerHTML
-        usuario.innerValue = megaUsuario;
-        $("#usuario").attr("value",megaUsuario);
-        $("#id_datosTwitter").attr("value", result["id"]);
+//        id_datosTwitter.innerValue = result["id"];
+//        var megaUsuario = usuario2.innerHTML
+ //       usuario.innerValue = megaUsuario;
+  //      $("#usuario").attr("value",megaUsuario);
+//        $("#id_datosTwitter").attr("value", result["id"]);
         name_datosTwitter.innerText = "Nombre: "+ result["name"];
         screenName_datosTwitter.innerText = "screenName: "+ result["screenName"];
         desc_datosTwitter.innerText = "desc: "+ result["desc"];
         var link = "https://twitter.com/"+result["screenName"];
-        $("a").attr("href", link);
+//        $("a").attr("href", link);
         $("#banner_datosTwitter").attr("src",result["banner"]);
         $("#image_datosTwitter").attr("src",result["image"]);
 

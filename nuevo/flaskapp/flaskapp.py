@@ -78,10 +78,10 @@ def hello():
     email=request.form['youremail']
     return render_template('index.html', name=name, email=email)
 
-@app.route('/hello2', methods=['POST'])
-def hello2():
-    name=request.form['name']
-    return render_template('index.html', name=name)
+@app.route('/comojugar2', methods=['POST'])
+def comojugar2():
+    print "como jugar22"
+    return render_template('login.html')
 
 @app.route('/gracias/', methods=['POST'])
 def gracias():

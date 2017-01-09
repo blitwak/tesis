@@ -15,40 +15,23 @@ $(function() {
 
   var usuarioLog = ""
 
-var loginMenu = '<div class="masthead clearfix">' +
-               ' <div class="inner" id="menulogin">'+
-          '<h3 class="masthead-brand">Tesis</h3>' +
+var loginMenu = '    <li class="active" id="login-link"><a href="#"  class="login">Iniciar sesión con facebook</a></li>'+
+    '    <li><a href="#comojugar">Cómo jugar?</a></li>'+
+    '           <li><a href="#sobre">De que trata la tesis?</a></li>'+
+    '           <li><a href="#contact">Contacto</a></li>'
 
-          '<nav>' +
-            '<ul class="nav masthead-nav">' +
-              '<li class="active"><a href="#" id="login" class="menu__link">Iniciar sesión con facebook</a></li>' +
-              '<li><a href="#">Algo mas?</a></li>' +
-              '<li><a href="#">Contact</a></li>' +
-            '</ul>' +
-          '</nav>' +
-        '</div>' +
-      '</div>'
-
-// var div_session3 = '<div class="inner" id="menulogueado">' +
-//           '<h3 class="masthead-brand" id="daleBienvenida" >Tesis</h3>' +
-//           '<nav>' +
-//             '<ul class="nav masthead-nav">' +
-//               '<li class="active"><a href="#" id="comenzarJugar"> Comenzar!</a></li>' +
-//               '<li><a href="#">Contact</a></li>' +
-//               '<li><a href="#" id="logout">Cerrar sesión</a></li>' +
-//             '</ul>' +
-//           '</nav>' +
-//         '</div>' +
-//       '</div>'
 
 var div_session3 = '<li class="active" id="comenzarJugar"><a href="#">Jugar</a></li>' +
-        '<li><a href="#">Algo m&aacute;s?</a></li>' +
-        '<li><a href="#">Contacto</a></li>' +
+'    <li><a href="#comojugar">Cómo jugar?</a></li>'+
+ '   <li><a href="#sobre">De que trata la tesis?</a></li>'+
+  ' <li><a href="#contact">Contacto</a></li>'+
         '<li><a href="#" id="logout">Cerrar sesión</a></li>';
 
-  var btn_jugar =  '<a href="" id="btncentral-jugar" class="btn btn-primary btn-xl page-scroll login">Jugar!</a>';
+  var btn_jugar =  '<a href="#" id="btncentral-jugar" class="btn btn-primary btn-xl page-scroll login">Jugar!</a>';
+var btn_jugar2 =  '<a href="#" id="btnabajo-jugar" class="btn btn-default btn-xl sr-button login">Jugar!</a>'
 
-var btn_jugar2 =  '<a href="" id="btnabajo-jugar" class="btn btn-default btn-xl sr-button login">Jugar!</a>'
+    var btn_central_login = '<a href="" id="login-link1" class="btn btn-primary btn-xl page-scroll login">Ingresar con Facebook</a>';
+    var btn_abajo_login = '<a href="" id="login-link2" class="btn btn-default btn-xl sr-button login">Ingresar con Facebook</a>'
 
 
     var menuOriginal =      '<li class="active" id="login-link"><a href="#"  class="login">Iniciar sesión con facebook</a></li>' +
@@ -100,12 +83,13 @@ var btn_jugar2 =  '<a href="" id="btnabajo-jugar" class="btn btn-default btn-xl 
 
           var menu= document.getElementById('btn-abajo');
           menu.innerHTML = btn_jugar2;
-
+//http://stackoverflow.com/questions/18076013/setting-session-variable-using-javascript
           sessionStorage.SessionName = "SessionData";
           sessionStorage.setItem("SessionName",response.name);
           //console.log(response.name);
           //console.log("que hay en session?2");
           var usernameSession = sessionStorage.getItem("SessionName");
+            //console.log(sessionStorage.getItem("SessionName"))
           //console.log(usernameSession)
           var texto = "Hola " + usernameSession + "!";
 //          console.log(texto);
@@ -134,27 +118,61 @@ var btn_jugar2 =  '<a href="" id="btnabajo-jugar" class="btn btn-default btn-xl 
         if (data.status === 'connected') {
         FB.logout(function(response) {
             var menu = document.getElementById('menu-links');
-            menu.innerHTML = menuOriginal;
+            menu.innerHTML = loginMenu;
 
+            $('#saludo').text("Inicio");
+
+            var menu= document.getElementById('btn-central');
+            menu.innerHTML = btn_central_login;
+
+            var menu= document.getElementById('btn-abajo');
+            menu.innerHTML = btn_abajo_login;
+
+            //http://stackoverflow.com/questions/15804462/how-to-clear-localstorage-sessionstorage-and-cookies-in-javascript-and-then-ret
+            sessionStorage.clear();
+            console.log("fin")
           // $('#menulogueado').after(loginMenu);
           // $('#menulogueado').remove();
-           post('/login', {});
+
+
 
         })
       }
       })
 
     }
+
+    $(document).on('click', '#comojugar2', function() {
+  //      var usernameSession = sessionStorage.getItem("SessionName");
+//        console.log(usernameSession)
+        console.log("como jugar2")
+        sessionStorage.setItem("parte","comojugar");
+        post('/comojugar2', {});
+    })
+
+
+
+
     $(document).on('click', '#comenzarJugar', function() {
         var usernameSession = sessionStorage.getItem("SessionName");
 //        console.log(usernameSession)
-
-        //      user = $('#usuario').text()
+        console.log("nav")
        post('/jugarPrimeraVez', {usuario: usernameSession});
-//       console.log("primera vez")
-
     })
 
+    $(document).on('click', '#btncentral-jugar', function() {
+        var usernameSession = sessionStorage.getItem("SessionName");
+//        console.log(usernameSession)
+        console.log("central")
+        post('/jugarPrimeraVez', {usuario: usernameSession});
+    })
+
+    $(document).on('click', '#btnabajo-jugar', function() {
+        var usernameSession = sessionStorage.getItem("SessionName");
+//        console.log(usernameSession)
+        console.log("abajo")
+        post('/jugarPrimeraVez', {usuario: usernameSession});
+    })
 
     $(document).on('click', '#login-link', function(e) {
       e.preventDefault();
@@ -180,6 +198,19 @@ var btn_jugar2 =  '<a href="" id="btnabajo-jugar" class="btn btn-default btn-xl 
         facebookLogout();
       else 
         return false;
+    })
+
+    $(document).on('click', '#logout2', function(e) {
+        e.preventDefault();
+        console.log($('#usuario').text());
+        if (confirm("¿Está seguro?"))
+        {
+            facebookLogout();
+            sessionStorage.clear();
+            post('/login', {});
+        }
+        else
+            return false;
     })
 
 })
