@@ -145,11 +145,25 @@ var btn_jugar2 =  '<a href="#" id="btnabajo-jugar" class="btn btn-default btn-xl
     $(document).on('click', '#comojugar2', function() {
   //      var usernameSession = sessionStorage.getItem("SessionName");
 //        console.log(usernameSession)
-        console.log("como jugar2")
+  //      console.log("como jugar2")
         sessionStorage.setItem("parte","comojugar");
-        post('/comojugar2', {});
+        post('/login', {});
     })
 
+    $(document).on('click', '#sobre2', function() {
+        //      var usernameSession = sessionStorage.getItem("SessionName");
+//        console.log(usernameSession)
+//        console.log("como jugar2")
+        sessionStorage.setItem("parte","sobre2");
+        post('/login', {});
+    })
+    $(document).on('click', '#contact2', function() {
+        //      var usernameSession = sessionStorage.getItem("SessionName");
+//        console.log(usernameSession)
+  //      console.log("como jugar2")
+        sessionStorage.setItem("parte","contact2");
+        post('/login', {});
+    })
 
 
 
