@@ -20,8 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="El objetivo de esta página web es etiquetar a los usuarios de Twitter con respecto al equipo de fútbol de Argentina que son hinchas para la utilización en una tesis de Licenciatura en Ciencias de la Computación del departamento de computación de la Facultad de Ciencias Exactas y Naturales de la Universidad de Buenos Aires">
+    <meta name="author" content="Brian Litwak">
      <!--<link rel="icon" href="../../favicon.ico">-->
 
     <!-- Bootstrap core CSS -->
@@ -42,9 +42,9 @@
     <!--<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>-->
 
     {% if title %}
-    <title>{{ title }} - Tesis Litwak</title>
+    <title>{{ title }} - Adivina el equipo!</title>
     {% else %}
-    <title>Tesis Litwak</title>
+    <title>Adivina el equipo!</title>
     {% endif %}
 </head>
 <body id="page-top">
@@ -53,7 +53,7 @@
     <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 
     <script src="/static/js/post.js"></script>
-    <script src="/static/js/fb.js?340" type='text/javascript' ></script>
+    <script src="/static/js/fb.js?350" type='text/javascript' ></script>
 
     <!-- 
     <hr>
@@ -74,7 +74,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Inicio</a>
+                <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Inicio</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
