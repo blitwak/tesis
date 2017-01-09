@@ -96,11 +96,13 @@
                 <div id="backgroundiv" name="backgroundiv" class="banner-img text-left">
                     <div class="profile-container">
                         <img  id="imageprofile" name="imageprofile"  alt="imagen de perfil" class="profile-img" />
-                        <div name="screenName" id = "screenName" class="h3">marcelo tinelli
+                        <div name="screenName" id = "screenName" class="h3">
                         </div>
-                        <div style="color:#888;">@cuervo_tinelli</div>
-                        <div class="profile-text">
-                            Periodista, Conductor de @showmatch y Vicepresidente de @sanlorenzo.
+                        <div style="color:#888;">
+                            <p name="screentwit" id="screentwit">
+                            </p>
+                        </div>
+                        <div class="profile-text" name="biografia" id="biografia">
                         </div>
 
 
@@ -186,6 +188,8 @@
 <script type="text/javascript">
     $( window ).load(function() 
     {
+
+
         var usernameSession = sessionStorage.getItem("SessionName");
         console.log("esta guardado?");
         console.log(usernameSession);
@@ -200,22 +204,17 @@
 
         $("#imageprofile").attr("src",result["banner"]);
 
-        screenName
-
-        name_datosTwitter.innerText = "Nombre: "+ result["name"];
-        screenName_datosTwitter.innerText = "screenName: "+ result["screenName"];
-        desc_datosTwitter.innerText = "desc: "+ result["desc"];
-        var link = "https://twitter.com/"+result["screenName"];
-  //      $("#banner_datosTwitter").attr("src",result["banner"]);
-//        $("#image_datosTwitter").attr("src",result["image"]);
-
-        imageUrl = 'https://scontent-gru2-1.xx.fbcdn.net/v/t1.0-9/11032753_10153671254258812_8859691432262490856_n.jpg?oh=4dcc80c7772363e137bb7dfcc565e607&oe=58DBFB8F';
-        var lala = 'transparent url(' + imageUrl + ') no-repeat center center scroll'
-        $("#imagenGrande").css('background', lala);
-        imageUrl = 'https://pbs.twimg.com/profile_images/753399375444017152/oAPOrRV0.jpg';
-        $("#imagenChica").attr("src",imageUrl);
-
-
+        screenName.innerText = result["name"];
+        var scr =  "@"+result["screenName"];
+        console.log(scr);
+        screentwit.innerText = scr;
+        console.log("que onda");
+        biografia.innerText = result["desc"];
+        console.log("biografia");
+        var twitterlink = "https://twitter.com/" + result["screenName"];
+        console.log(twitterlink);
+        $("#tweetslinksuser").attr("href",twitterlink);
+        console.log("finnnnn");
     });
 
 </script>
