@@ -1,18 +1,19 @@
-"""Auth0's sample server
-"""
-from functools import wraps
-import os
-
-from dotenv import Dotenv
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from flask import Flask
-from flask import redirect
-from flask import render_template
-from flask import request
-from flask import send_from_directory
-from flask import session
+from functools import wraps
+from dotenv import Dotenv
+import json
+import preparar as preparar
+import pickle
+import os.path
+import os
 import requests
-
+from flask import Flask, request, jsonify, session, redirect, render_template, send_from_directory,url_for, escape
+from flask_mongoalchemy import MongoAlchemy
 import constants
+
+#https://pythonhosted.
 
 # Load Env variables
 env = None
@@ -24,8 +25,58 @@ except IOError:
 
 app = Flask(__name__, static_url_path='')
 app.secret_key = constants.SECRET_KEY
+
+#https://pythonhosted.org/Flask-MongoAlchemy/
+
+app.config["AWS_ACCESS_KEY_ID"] = constants.AWS_ACCESS_KEY_ID
+app.config["AWS_SECRET_ACCESS_KEY"] = constants.AWS_SECRET_ACCESS_KEY
+
+app.config['MONGOALCHEMY_DATABASE'] = constants.MONGOALCHEMY_DATABASE
+db = MongoAlchemy(app)
 app.debug = True
 
+class registro(db.Document):
+	colaborador = db.StringField()
+	perfilDeTwitter = db.StringField()
+	choice = db.StringField()
+
+
+global cantPerfilesAmostrar
+cantPerfilesAmostrar = 10
+
+def levantarPerfilesDeTwitter():
+#	filename = "/var/www/twitterAmostrarCopaArgentina.p"
+	filename = "bd/twitterAmostrar.p"
+	if os.path.isfile(filename):
+		filehandler = open(filename,'rb')
+		ret = pickle.load(filehandler)
+		filehandler.close()
+		print "levantada"
+		return ret
+
+global perfilesDeTwitter
+perfilesDeTwitter = levantarPerfilesDeTwitter()
+
+print len(perfilesDeTwitter)
+
+global clavesJson
+clavesJson = ["Primero","Segundo","Tercero","Cuarto","Quinto","Sexto"]
+
+global dicPerfilesDeTwitterToCantidadVistos
+dicPerfilesDeTwitterToCantidadVistos = {}
+
+global dicEsclavoToPerfilesTwitterVistos
+dicEsclavoToPerfilesTwitterVistos = {} #user->idTwitterCuenta
+
+global dicEsclavoToPerfilesAver
+dicEsclavoToPerfilesAver = {}
+
+global dicUserToTuplasSeleccionadas
+dicUserToTuplasSeleccionadas = {} # user -> idTwitterCuenta,choice
+global dicidTwitterCuentaToVotacion
+dicidTwitterCuentaToVotacion = {} #idTwitterCuenta ->user,choice
+asd = 0
+# Define a route for the default URL, which loads the form
 
 # Requires authentication decorator
 def requires_auth(f):
@@ -39,21 +90,27 @@ def requires_auth(f):
 
 # Controllers API
 @app.route('/')
-def home():
-    return render_template('home.html', env=env)
-
-
-@app.route('/dashboard')
-@requires_auth
-def dashboard():
-    return render_template('dashboard.html',
-                           user=session[constants.PROFILE_KEY])
-
+@app.route('/login', methods=['POST','GET'])
+def login():
+    print "aca"
+    return render_template('login.html', env=env)
 
 @app.route('/public/<path:filename>')
 def static_files(filename):
     return send_from_directory('./public', filename)
 
+@app.route('/index')
+@requires_auth
+def index():
+    
+    return render_template('index.html',
+                           user=session[constants.PROFILE_KEY], env=env)
+
+
+#@app.route('/dashboard')
+#@requires_auth
+#def dashboard():
+#    return render_template('dashboard.html', user=session[constants.PROFILE_KEY])
 
 @app.route('/callback')
 def callback_handling():
@@ -78,7 +135,7 @@ def callback_handling():
 
     user_info = requests.get(user_url).json()
     session[constants.PROFILE_KEY] = user_info
-    return redirect('/dashboard')
+    return redirect('/index')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=os.environ.get('PORT', 3000))
