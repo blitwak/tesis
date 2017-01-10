@@ -57,40 +57,71 @@
                 </div>
 
                 <div class="h2">De qu&eacute; club es la persona de este usuario de twitter? </div>
-                <div class="col-md-5">
-                    <label for="teams">Club:</label>
-                    <select id="teams" name="teams" class="form-control" title="Equipos">
-                        <option value="No se">No se</option>
-                        <option value="Ninguno">Ninguno</option>
-                        <option value="Boca">Boca</option>
-                        <option value="River">River</option>
-                        <option value="Racing">Racing</option>
-                        <option value="Independiente">Independiente</option>
-                        <option value="San Lorenzo">San Lorenzo</option>
-                        <option value="Huracan">Huracan</option>
-                        <option value="Belgrano">Belgrano</option>
-                        <option value="Talleres">Talleres</option>
-                        <option value="Rosario central">Rosario central</option>
-                        <option value="Newell's">Newell's</option>
-                        <option value="Estudiantes de la plata">Estudiantes de la plata</option>
-                        <option value="Gimnasia">Gimnasia</option>
-                        <option value="Colon">Colon</option>
-                        <option value="Velez">Velez</option>
-                        <option value="Lanus">Lanus</option>
-                        <option value="Banfield">Banfield</option>
-                        <option value="Atlético Tucumán">Atlético Tucumán</option>
-                        <option value="Temperley">Temperley</option>
-                        <option value="Union">Union</option>
-                        <option value="Tigre">Tigre</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <input type="submit" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />
-                </div>
+                    <div class="col-md-5">
+                        <label for="teams">Club:</label>
 
-
+                        <div class="btn-group">
+                            <table>
+                                <tr>
+                                    <td><button id= "btn1" type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn2" type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn3"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn4" type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn5"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn6" type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn7"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn8"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn9"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn10"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn11" type="submit" class="btn btn-default"></button></td>
+                                </tr>
+                                <!--<input type="submit" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />-->
+                                <tr>
+                                    <td><button id="btn12"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn13" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn14" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn15" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn16" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn17" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn18" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn19" type="submit" class="btn btn-default"></button></td>
+                                    <td><button  id="btn20" type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn21"  type="submit" class="btn btn-default"></button></td>
+                                    <td><button id="btn22"  type="submit" class="btn btn-default"></button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
             </div>
+            <script type="text/javascript">
+                function shuffle(array) {
+                    var currentIndex = array.length, temporaryValue, randomIndex;
 
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) {
+
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
+                }
+                var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Huracan","Belgrano","Talleres","Rosario central","Newell's","Estudiantes de la plata","Gimnasia","Colon","Velez","Lanus","Banfield","Atlético Tucumán","Temperley","Union","Tigre"]
+                teams = shuffle(teams);
+                console.log(teams);
+
+                for (i = 0; i < teams.length; i++) {
+                    var texto = teams[i];
+                    var nombrebtn = '#btn' + (i+1)+'';
+                    $(nombrebtn).html(texto);
+                }
+            </script>
 
             <div class="row" style="margin-top: 10px;">
                 <div id="backgroundiv" name="backgroundiv" class="banner-img text-left">
@@ -171,53 +202,19 @@
 
 <hr style="border:1px solid #bbb; max-width: 70%; margin-top: 15px;"/>
 <script type="text/javascript">
+
     $( window ).load(function() 
     {
-
-
         var usernameSession = sessionStorage.getItem("SessionName");
-        console.log("esta guardado?");
-        console.log(usernameSession);
-
         perfiles = document.getElementById('lblperfiles').innerHTML
         var result = JSON.parse(perfiles);
-
-        console.log(result);
         var linkbanner = result['image'];
-        console.log(linkbanner);
         $('#backgroundiv').css("background-image", "url("+ linkbanner+")");
-
         $("#imageprofile").attr("src",result["banner"]);
-
         screenName.innerText = result["name"];
         var scr =  "@"+result["screenName"];
-        console.log(scr);
         screentwit.innerText = scr;
-        console.log("que onda");
         biografia.innerText = result["desc"];
-        console.log("biografia");
-//        var twitterlink = "https://twitter.com/" + result["screenName"];
-//        twitterlink = '"'+twitterlink +'"';
-//        twitterlink = '"https://twitter.com/cuervoTinelli"';
-//        console.log(twitterlink);
-//        $("#tweetslinksuser").attr("href",twitterlink);
-
-
-
-
-
-//        $("#twitter-timeline").attr("href",twitterlink);
-//        $("#tweetslinksuser").prop("href",twitterlink);
-//        $("#twitter-timeline").prop("href",twitterlink);
-//        $("tweetslinksuser").attr("href",twitterlink);
-//        $("twitter-timeline").attr("href",twitterlink);
-//        $("tweetslinksuser").prop("href",twitterlink);
-//        $("twitter-timeline").prop("href",twitterlink);
-
-
-
-
-        console.log("finnnnn");
     });
 
 </script>
