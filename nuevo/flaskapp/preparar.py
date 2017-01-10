@@ -42,4 +42,4 @@ def armarMensaje(clave,perfilesDeTwitter):
 	dic["desc"]= perfil[2]
 	dic["banner"]= perfil[3]
 	dic["image"]= perfil[4]
-	return json.dumps(dic)
+	return json.dumps(dic),perfil[1]

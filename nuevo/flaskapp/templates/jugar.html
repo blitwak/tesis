@@ -112,26 +112,11 @@
              </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <a class="twitter-timeline" href="https://twitter.com/cuervoTinelli">Tweets by TwitterDev</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <a id="tweetslinksuser" name="tweetslinksuser" class="twitter-timeline" href = "https://twitter.com/{{nombreDelUsuario}}">Tweets by {{nombreDelUsuario}}</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p id = "name_datosTwitter"></p>
-                    <p id = "screenName_datosTwitter"></p>
-                    <p id = "name_datosTwitter"></p>
-                    <p id = "desc_datosTwitter"></p>
-                    <img src="" id = "banner_datosTwitter" height="42" width="42">
-                    <img src="" id = "image_datosTwitter" height="42" width="42">
-                </div>
 
-            </div>
-
-
-            <input type="hidden" id="cantidadTotalPerfiles" value="">
-            <input type="hidden" id="cantidadActualPerfiles" value="">
             <label  hidden id="lblperfiles"> {{perfiles}} </label>
-            <input type="hidden" id="cantidadAeeectualPerfiles" value="">
 
         </form>
 
@@ -211,9 +196,27 @@
         console.log("que onda");
         biografia.innerText = result["desc"];
         console.log("biografia");
-        var twitterlink = "https://twitter.com/" + result["screenName"];
-        console.log(twitterlink);
-        $("#tweetslinksuser").attr("href",twitterlink);
+//        var twitterlink = "https://twitter.com/" + result["screenName"];
+//        twitterlink = '"'+twitterlink +'"';
+//        twitterlink = '"https://twitter.com/cuervoTinelli"';
+//        console.log(twitterlink);
+//        $("#tweetslinksuser").attr("href",twitterlink);
+
+
+
+
+
+//        $("#twitter-timeline").attr("href",twitterlink);
+//        $("#tweetslinksuser").prop("href",twitterlink);
+//        $("#twitter-timeline").prop("href",twitterlink);
+//        $("tweetslinksuser").attr("href",twitterlink);
+//        $("twitter-timeline").attr("href",twitterlink);
+//        $("tweetslinksuser").prop("href",twitterlink);
+//        $("twitter-timeline").prop("href",twitterlink);
+
+
+
+
         console.log("finnnnn");
     });
 

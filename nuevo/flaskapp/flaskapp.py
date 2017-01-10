@@ -102,7 +102,7 @@ def jugarPrimeraVez():
     perfilAenviar = perfiles[0]
     dicEsclavoToPerfilesAver[name]=perfiles[1:]
     print name
-    msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
+    msg, twitterPerf = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
     if name not in dicEsclavoToPerfilesTwitterVistos.keys():
         dicEsclavoToPerfilesTwitterVistos[name]= []
         print "grabo"
@@ -110,7 +110,7 @@ def jugarPrimeraVez():
         print "no grabo"
     if name not in dicUserToTuplasSeleccionadas.keys():
         dicUserToTuplasSeleccionadas[name]= []
-    return render_template('jugar.html', name=name, perfiles = msg)
+    return render_template('jugar.html', name=name, perfiles = msg, nombreDelUsuario = twitterPerf)
 
 
 @app.route('/mostrarTodoRegistro')
