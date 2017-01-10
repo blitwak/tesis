@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from flask import Flask
 from flask import Flask, session, redirect, url_for, escape, request,render_template
 import json
@@ -120,70 +122,121 @@ def mostrarTodoRegistro():
 
 @app.route('/yajugue', methods=['POST'])
 def yajugue():
-	global asd
-	global dicEsclavoToPerfilesTwitterVistos
-	global dicUserToTuplasSeleccionadas
-	global dicidTwitterCuentaToVotacion
-	global dicEsclavoToPerfilesAver
+    global asd
+    global dicEsclavoToPerfilesTwitterVistos
+    global dicUserToTuplasSeleccionadas
+    global dicidTwitterCuentaToVotacion
+    global dicEsclavoToPerfilesAver
 
-	print "YA jUGUE futbol"
-	print request.form
-	name=request.form['usuario']
-	print name
-	seleccionEquipo=request.form['teams']
-	print seleccionEquipo
-	idTwitterCuenta = request.form['id_datosTwitter']
-	print idTwitterCuenta
-	print name
-	print "-------"
-	print asd
-	asd = 2
-	print asd
-	print "-------------------------------------"	
-	print name
-	print dicEsclavoToPerfilesTwitterVistos.keys()
-	print dicUserToTuplasSeleccionadas.keys()
-	print dicidTwitterCuentaToVotacion.keys()
-	print dicEsclavoToPerfilesAver.keys()
-	print idTwitterCuenta
+    print "YA jUGUE futbol"
+    print request.form
+    formulario = request.form
+    if("btn1" in formulario):
+        btn=request.form['btn1']
+        if(btn== 'No se'):
+            print "No se"
+        elif(btn == "Ninguno"):
+            print "Ninguno"
+        elif(btn == "Boca"):
+            print "Boca"
+        elif(btn == "River"):
+            print "River"
+        elif(btn == "Racing"):
+            print "Racing"
+        elif(btn == "Independiente"):
+            print "Independiente"
+        elif(btn == "San Lorenzo"):
+            print "San Lorenzo"
+        elif(btn == "Huracan"):
+            print "Huracan"
+        elif(btn == "Belgrano"):
+            print "Belgrano"
+        elif(btn == "Talleres"):
+            print "Talleres"
+        elif(btn == "Rosario central"):
+            print "Rosario central"
+        elif(btn == "Newell's"):
+            print "Newell's"
+        elif(btn == "Estudiantes de la plata"):
+            print "Estudiantes de la plata"
+        elif(btn == "Gimnasia"):
+            print "Gimnasia"
+        elif(btn == "Colon"):
+            print "Colon"
+        elif(btn == "Velez"):
+            print "Velez"
+        elif(btn == "Lanus"):
+            print "Lanus"
+        elif(btn == "Banfield"):
+            print "Banfield"
+        elif(btn == "Atlético Tucumán".encode(utf-8)):
+            print "Atlético Tucumán"
+        elif(btn == "Temperley"):
+            print "Temperley"
+        elif(btn == "Union"):
+            print "Union"
+        elif(btn == "Tigre"):
+            print "Tigre"
+        else:
+            print "boom"
+    else:
+        print "No"
+    print "basura"
+    print session.get('SessionName')
+    name=request.form['usuario']
+    print name
+    seleccionEquipo=request.form['teams']
+    print seleccionEquipo
+    idTwitterCuenta = request.form['id_datosTwitter']
+    print idTwitterCuenta
+    print name
+    print "-------"
+    print asd
+    asd = 2
+    print asd
+    print "-------------------------------------"
+    print name
+    print dicEsclavoToPerfilesTwitterVistos.keys()
+    print dicUserToTuplasSeleccionadas.keys()
+    print dicidTwitterCuentaToVotacion.keys()
+    print dicEsclavoToPerfilesAver.keys()
+    print idTwitterCuenta
 
 
-#	asd = dicEsclavoToPerfilesTwitterVistos[name]
-#	asd.append(idTwitterCuenta)
-	print "asd"
-	dicEsclavoToPerfilesTwitterVistos[name].append(idTwitterCuenta)
-	print "eee"
-#	dicEsclavoToPerfilesTwitterVistos[name] = asd
-	dicUserToTuplasSeleccionadas[name].append([idTwitterCuenta,seleccionEquipo])
-	print "ttt"
-#	fff = dicUserToTuplasSeleccionadas[name]
-#	print "antes de un apend"
-#	fff.append([idTwitterCuenta,seleccionEquipo])
-#	dicUserToTuplasSeleccionadas[name] = fff
+    #	asd = dicEsclavoToPerfilesTwitterVistos[name]
+    #	asd.append(idTwitterCuenta)
+    print "asd"
+    dicEsclavoToPerfilesTwitterVistos[name].append(idTwitterCuenta)
+    print "eee"
+    #	dicEsclavoToPerfilesTwitterVistos[name] = asd
+    dicUserToTuplasSeleccionadas[name].append([idTwitterCuenta,seleccionEquipo])
+    print "ttt"
+    #	fff = dicUserToTuplasSeleccionadas[name]
+    #	print "antes de un apend"
+    #	fff.append([idTwitterCuenta,seleccionEquipo])
+    #	dicUserToTuplasSeleccionadas[name] = fff
 
-	if (idTwitterCuenta not in dicidTwitterCuentaToVotacion.keys()):
-		dicidTwitterCuentaToVotacion[idTwitterCuenta] = []
-		print "agregado"
-	print idTwitterCuenta
-	elementito = [name,seleccionEquipo]
-	print "elementito"
-	dicidTwitterCuentaToVotacion[idTwitterCuenta].append(elementito)
-#	dicidTwitterCuentaToVotacion[idTwitterCuenta] = yyyy
-	print "antes del commit"
-	agregar = registro(colaborador= name ,perfilDeTwitter= idTwitterCuenta,choice=seleccionEquipo)
-	agregar.save()
-	print"coommit"
+    if (idTwitterCuenta not in dicidTwitterCuentaToVotacion.keys()):
+        dicidTwitterCuentaToVotacion[idTwitterCuenta] = []
+        print "agregado"
+    print idTwitterCuenta
+    elementito = [name,seleccionEquipo]
+    print "elementito"
+    dicidTwitterCuentaToVotacion[idTwitterCuenta].append(elementito)
+    #	dicidTwitterCuentaToVotacion[idTwitterCuenta] = yyyy
+    print "antes del commit"
+    agregar = registro(colaborador= name ,perfilDeTwitter= idTwitterCuenta,choice=seleccionEquipo)
+    agregar.save()
+    print"coommit"
 
-	perfiles = dicEsclavoToPerfilesAver[name]    
-	if(len(perfiles) > 0):
-		perfilAenviar = perfiles[0]
-		dicEsclavoToPerfilesAver[name]=perfiles[1:]
-		msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
-		return render_template('jugar.html', name=name, perfiles = msg)
-	else:
-		return render_template('finJuego.html', user=name, votacion = dicUserToTuplasSeleccionadas[name])
-
-
+    perfiles = dicEsclavoToPerfilesAver[name]
+    if(len(perfiles) > 0):
+        perfilAenviar = perfiles[0]
+        dicEsclavoToPerfilesAver[name]=perfiles[1:]
+        msg = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
+        return render_template('jugar.html', name=name, perfiles = msg)
+    else:
+        return render_template('finJuego.html', user=name, votacion = dicUserToTuplasSeleccionadas[name])
 
 @app.route('/1')
 def hello_world():
