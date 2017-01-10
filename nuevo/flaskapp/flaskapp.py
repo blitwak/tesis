@@ -1,26 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import Flask
-from flask import Flask, session, redirect, url_for, escape, request,render_template
+from functools import wraps
+from dotenv import Dotenv
 import json
 import preparar as preparar
 import pickle
 import os.path
+import os
+import requests
+from flask import Flask, request, jsonify, session, redirect, render_template, send_from_directory,url_for, escape
 from flask_mongoalchemy import MongoAlchemy
+import constants
 
 app = Flask(__name__)
 puerto = 5000
-app.secret_key = "holamanolacomova"
+app.secret_key = constants.SECRET_KEY
+
 #app.SQLALCHEMY_DATABASE_URI = 'sqlite:///students.sqlite3'
 #app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
-app.config["AWS_ACCESS_KEY_ID"] = "AKIAINSPSQ3GTANJH64A"
-app.config["AWS_SECRET_ACCESS_KEY"] = "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"
 
-#app.config[secret_key] = "sduasbnasdar"
-
+app.config["AWS_ACCESS_KEY_ID"] = constants.AWS_ACCESS_KEY_ID
+app.config["AWS_SECRET_ACCESS_KEY"] = constants.AWS_SECRET_ACCESS_KEY
 
 #https://pythonhosted.org/Flask-MongoAlchemy/
-app.config['MONGOALCHEMY_DATABASE'] = 'test'
+
+app.config['MONGOALCHEMY_DATABASE'] = constants.MONGOALCHEMY_DATABASE
 db = MongoAlchemy(app)
 
 class registro(db.Document):
@@ -28,11 +33,21 @@ class registro(db.Document):
 	perfilDeTwitter = db.StringField()
 	choice = db.StringField()
 
-global asd
-asd = 0
 
 global cantPerfilesAmostrar
 cantPerfilesAmostrar = 10
+
+# Requires authentication decorator
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if constants.PROFILE_KEY not in session:
+            return redirect('/')
+        return f(*args, **kwargs)
+    return decorated
+
+
+
 
 def levantarPerfilesDeTwitter():
 #	filename = "/var/www/twitterAmostrarCopaArgentina.p"
@@ -71,7 +86,8 @@ asd = 0
 @app.route('/')
 @app.route('/login', methods=['POST','GET'])
 def login():
-    return render_template('login.html')
+    print "aca"
+    return render_template('login.html', env=env)
 
 
 @app.route('/hello/', methods=['POST'])
@@ -241,6 +257,34 @@ def yajugue():
 @app.route('/1')
 def hello_world():
 	return 'Hello from Flask!'
+
+
+
+@app.route('/callback')
+def callback_handling():
+    code = request.args.get(constants.CODE_KEY)
+    json_header = {constants.CONTENT_TYPE_KEY: constants.APP_JSON_KEY}
+    token_url = 'https://{auth0_domain}/oauth/token'.format(
+                    auth0_domain=env[constants.AUTH0_DOMAIN])
+    token_payload = {
+        constants.CLIENT_ID_KEY: env[constants.AUTH0_CLIENT_ID],
+        constants.CLIENT_SECRET_KEY: env[constants.AUTH0_CLIENT_SECRET],
+        constants.REDIRECT_URI_KEY: env[constants.AUTH0_CALLBACK_URL],
+        constants.CODE_KEY: code,
+        constants.GRANT_TYPE_KEY: constants.AUTHORIZATION_CODE_KEY
+    }
+
+    token_info = requests.post(token_url, json=token_payload,
+                               headers=json_header).json()
+
+    user_url = 'https://{auth0_domain}/userinfo?access_token={access_token}'\
+        .format(auth0_domain=env[constants.AUTH0_DOMAIN],
+                access_token=token_info[constants.ACCESS_TOKEN_KEY])
+
+    user_info = requests.get(user_url).json()
+    session[constants.PROFILE_KEY] = user_info
+    return redirect('/login')
+
 
 if __name__ == '__main__':
 #  db.create_all()

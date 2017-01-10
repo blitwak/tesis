@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
+<script>
+    console.log("llego!");
+    var AUTH0_CLIENT_ID = '{{env.AUTH0_CLIENT_ID}}';
+    var AUTH0_DOMAIN = '{{env.AUTH0_DOMAIN}}';
+    var AUTH0_CALLBACK_URL = '{{env.AUTH0_CALLBACK_URL if env.AUTH0_CALLBACK_URL else "http://localhost:3000/callback" }}';
+</script>
+
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
