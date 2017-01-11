@@ -41,6 +41,10 @@ class registro(db.Document):
 	perfilDeTwitter = db.IntField()
 	choice = db.StringField()
 
+#db.registro.find().count()
+#use test
+#mongo --shell
+#db.bios.remove( { } )
 
 global cantPerfilesAmostrar
 cantPerfilesAmostrar = 10
@@ -132,6 +136,7 @@ def jugarPrimeraVez():
 
     name = session[constants.PROFILE_KEY]['nickname']
     perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
+    print perfiles
     perfilAenviar = perfiles[0]
     dicEsclavoToPerfilesAver[name]=perfiles[1:]
     print name
@@ -260,7 +265,7 @@ def yajugue():
         dicEsclavoToUltimoVisto[name] = perfilAenviar
         return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = twitterPerf)
     else:
-        return render_template('finJuego.html', user=name, votacion = dicUserToTuplasSeleccionadas[name])
+        return render_template('finJuego.html',env=env, user=name, votacion = dicUserToTuplasSeleccionadas[name])
 
 
 @app.route('/callback')
