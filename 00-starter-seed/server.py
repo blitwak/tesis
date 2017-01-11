@@ -13,6 +13,7 @@ from flask import Flask, request, jsonify, session, redirect, render_template, s
 from flask_mongoalchemy import MongoAlchemy
 import constants
 import codecs
+from sortedcontainers import SortedList
 
 #https://pythonhosted.
 
@@ -36,6 +37,12 @@ app.config['MONGOALCHEMY_DATABASE'] = constants.MONGOALCHEMY_DATABASE
 db = MongoAlchemy(app)
 app.debug = True
 
+global cantidadesHeap
+cantidadesHeap = SortedList()
+
+global dicCantidadTOperfilesTwitter
+dicCantidadTOperfilesTwitter = {}
+
 class registro(db.Document):
 	colaborador = db.StringField()
 	perfilDeTwitter = db.IntField()
@@ -54,13 +61,16 @@ def levantarPerfilesDeTwitter():
 	filename = "bd/twitterAmostrar.p"
 	if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
-		ret = pickle.load(filehandler)
+		dic = pickle.load(filehandler)
 		filehandler.close()
-		print "levantada"
+#        ret = preparar.armarGrupos(dic,cantPerfilesAmostrar)
 		return ret
 
 global perfilesDeTwitter
 perfilesDeTwitter = levantarPerfilesDeTwitter()
+
+global posiblesClaves
+posiblesClaves = perfilesDeTwitter.keys()
 
 print len(perfilesDeTwitter)
 
@@ -131,7 +141,6 @@ def index():
 def jugarPrimeraVez():
     global dicEsclavoToPerfilesAver
     global dicEsclavoToPerfilesTwitterVistos
-    global asd
     global dicUserToTuplasSeleccionadas
 
     name = session[constants.PROFILE_KEY]['nickname']
@@ -224,7 +233,7 @@ def yajugue():
             print "Banfield"
         elif(btn == "Atletico Tucuman"):
             equipoSeleccionado = "Atletico Tucuman"
-            print "Atlético Tucumán"
+            print "Atletico Tucuman"
         elif(btn == "Temperley"):
             equipoSeleccionado = "Temperley"
             print "Temperley"
