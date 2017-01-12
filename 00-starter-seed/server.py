@@ -14,7 +14,7 @@ from flask_mongoalchemy import MongoAlchemy
 import constants
 import codecs
 from sortedcontainers import SortedList
-
+from flask import Markup
 #https://pythonhosted.
 
 # Load Env variables
@@ -37,11 +37,6 @@ app.config['MONGOALCHEMY_DATABASE'] = constants.MONGOALCHEMY_DATABASE
 db = MongoAlchemy(app)
 app.debug = True
 
-global cantidadesHeap
-cantidadesHeap = SortedList()
-
-global dicCantidadTOperfilesTwitter
-dicCantidadTOperfilesTwitter = {}
 
 class registro(db.Document):
 	colaborador = db.StringField()
@@ -56,15 +51,22 @@ class registro(db.Document):
 global cantPerfilesAmostrar
 cantPerfilesAmostrar = 10
 
+global cantidadesHeap
+cantidadesHeap = SortedList()
+
+global dicCantidadTOperfilesTwitter
+dicCantidadTOperfilesTwitter = {}
+
+
 def levantarPerfilesDeTwitter():
 #	filename = "/var/www/twitterAmostrarCopaArgentina.p"
-	filename = "bd/twitterAmostrar.p"
+	filename = "bd/twitterAmostrar3.p"
 	if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
 		dic = pickle.load(filehandler)
 		filehandler.close()
 #        ret = preparar.armarGrupos(dic,cantPerfilesAmostrar)
-		return ret
+		return dic
 
 global perfilesDeTwitter
 perfilesDeTwitter = levantarPerfilesDeTwitter()
@@ -72,28 +74,100 @@ perfilesDeTwitter = levantarPerfilesDeTwitter()
 global posiblesClaves
 posiblesClaves = perfilesDeTwitter.keys()
 
+global dicColaboradorToPerfilesVistos
+dicColaboradorToPerfilesVistos = {}
+
+global dicColaboradorToUltimoVisto
+dicColaboradorToUltimoVisto = {}
+
+global dicperfilTwitterToCantidades
+dicperfilTwitterToCantidades = {}
+
+global dicColaboradorToprogessBar
+dicColaboradorToprogessBar = {}
+
+def obtenerPerfilAmirar(nameColaborador):
+    global cantidadesHeap
+    global dicCantidadTOperfilesTwitter
+    global posiblesClaves
+    global dicColaboradorToPerfilesVistos
+
+
+    cantidadAagregar = []
+    vistosPorColaborador = dicColaboradorToPerfilesVistos[nameColaborador]
+    bloq = True
+    while(True):
+        if(len(cantidadesHeap)>0):
+            cantidad = cantidadesHeap.pop()
+            perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
+            for perilTwitter in perfilesDeTwitter:
+                if (perilTwitter not in vistosPorColaborador):
+                    for cant in cantidadAagregar:
+                        cantidadesHeap.add(cant)    
+                    return perilTwitter
+            cantidadAagregar.append(cantidad)
+        else:
+            for cant in cantidadAagregar:
+                cantidadesHeap.add(cant)    
+            for posibleClave in posiblesClaves:
+                if posibleClave not in vistosPorColaborador:
+                    if(bloq == False):
+                        return posibleClave
+                    else:
+                        bloq = False
+def armarMensaje(clave):
+    global perfilesDeTwitter
+    perfil = perfilesDeTwitter[clave]
+    dic = {}
+    dic["id"]= clave
+    dic["name"]= perfil[0]
+    dic["screenName"]= perfil[1]
+    dic["desc"]= perfil[2]
+    dic["banner"]= perfil[3]
+    dic["image"]= perfil[4]
+    print dic 
+    return json.dumps(dic),perfil[1]
+
+
+def hayMayoriaDeEquipo(listaVotacion):
+    equipoSeleccionado = {}
+    for seleccion in listaVotacion:
+        equipo = seleccion[1]
+        if (equipo in equipoSeleccionado.keys()):
+            equipoSeleccionado[equipo] = equipoSeleccionado[equipo] + 1
+        else:
+            equipoSeleccionado[equipo] = 1
+    cantVotantes = len(listaVotacion)
+    limite = cantVotantes * 0.75
+    for votado in equipoSeleccionado.keys():
+        cantidadVotos = equipoSeleccionado[votado]
+        if(cantidadVotos > limite):
+            print "Ya esta decidido"
+            return True
+    return False
+
 print len(perfilesDeTwitter)
 
-global clavesJson
-clavesJson = ["Primero","Segundo","Tercero","Cuarto","Quinto","Sexto"]
+# global clavesJson
+# clavesJson = ["Primero","Segundo","Tercero","Cuarto","Quinto","Sexto"]
 
-global dicPerfilesDeTwitterToCantidadVistos
-dicPerfilesDeTwitterToCantidadVistos = {}
+# global dicPerfilesDeTwitterToCantidadVistos
+# dicPerfilesDeTwitterToCantidadVistos = {}
 
-global dicEsclavoToPerfilesTwitterVistos
-dicEsclavoToPerfilesTwitterVistos = {} #user->idTwitterCuenta
+# global dicEsclavoToPerfilesTwitterVistos
+# dicEsclavoToPerfilesTwitterVistos = {} #user->idTwitterCuenta
 
-global dicEsclavoToPerfilesAver
-dicEsclavoToPerfilesAver = {}
+# global dicEsclavoToPerfilesAver
+# dicEsclavoToPerfilesAver = {}
 
-global dicEsclavoToUltimoVisto
-dicEsclavoToUltimoVisto = {}
+# global dicEsclavoToUltimoVisto
+# dicEsclavoToUltimoVisto = {}
 
-global dicUserToTuplasSeleccionadas
-dicUserToTuplasSeleccionadas = {} # user -> idTwitterCuenta,choice
+global dicColaboradorToTuplasSeleccionadas
+dicColaboradorToTuplasSeleccionadas = {} # user -> idTwitterCuenta,choice
 global dicidTwitterCuentaToVotacion
 dicidTwitterCuentaToVotacion = {} #idTwitterCuenta ->user,choice
-asd = 0
+# asd = 0
 # Define a route for the default URL, which loads the form
 
 # Requires authentication decorator
@@ -139,38 +213,48 @@ def index():
 
 @app.route('/jugarPrimeraVez', methods=['POST'])
 def jugarPrimeraVez():
-    global dicEsclavoToPerfilesAver
-    global dicEsclavoToPerfilesTwitterVistos
-    global dicUserToTuplasSeleccionadas
+#    global dicEsclavoToPerfilesAver
+ #   global dicEsclavoToPerfilesTwitterVistos
+  #  global dicUserToTuplasSeleccionadas
 
-    name = session[constants.PROFILE_KEY]['nickname']
-    perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
-    print perfiles
-    perfilAenviar = perfiles[0]
-    dicEsclavoToPerfilesAver[name]=perfiles[1:]
-    print name
-    msg, twitterPerf = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
-    if name not in dicEsclavoToPerfilesTwitterVistos.keys():
-        dicEsclavoToPerfilesTwitterVistos[name]= []
-        print "grabo"
-    else:
-        print "no grabo"
-    if name not in dicUserToTuplasSeleccionadas.keys():
-        dicUserToTuplasSeleccionadas[name]= []
+    global dicColaboradorToTuplasSeleccionadas
+    global dicColaboradorToPerfilesVistos
+    global dicColaboradorToUltimoVisto
 
-    global dicEsclavoToUltimoVisto
-    dicEsclavoToUltimoVisto[name] = perfilAenviar
-    return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = twitterPerf)
+    nameColaborador = session[constants.PROFILE_KEY]['nickname']
+    print nameColaborador
+
+    if nameColaborador not in dicColaboradorToPerfilesVistos.keys():
+        dicColaboradorToPerfilesVistos[nameColaborador]= []
+
+    if nameColaborador not in dicColaboradorToTuplasSeleccionadas.keys():
+        dicColaboradorToTuplasSeleccionadas[nameColaborador]= []
+
+    perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
+
+#    perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
+ #   print perfiles
+  #  perfilAenviar = perfiles[0]
+   # dicEsclavoToPerfilesAver[name]=perfiles[1:]
+
+    msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
+
+    print msg
+    dicColaboradorToprogessBar[nameColaborador] = 0 
+    dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
+#    value = Markup(msg)
+    return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName)
 
 
 @app.route('/yajugue', methods=['POST'])
 def yajugue():
-    global asd
-    global dicEsclavoToPerfilesTwitterVistos
-    global dicUserToTuplasSeleccionadas
-    global dicidTwitterCuentaToVotacion
-    global dicEsclavoToPerfilesAver
-    global dicEsclavoToUltimoVisto
+    # global asd
+    # global dicEsclavoToPerfilesTwitterVistos
+    global dicColaboradorToTuplasSeleccionadas
+    global dicColaboradorToprogessBar
+    # global dicidTwitterCuentaToVotacion
+    # global dicEsclavoToPerfilesAver
+    # global dicEsclavoToUltimoVisto
 
 
     formulario = request.form
@@ -198,9 +282,9 @@ def yajugue():
         elif(btn == "San Lorenzo"):
             equipoSeleccionado = "San Lorenzo"
             print "San Lorenzo"
-        elif(btn == "Huracan"):
-            equipoSeleccionado = "Huracan"
-            print "Huracan"
+        # elif(btn == "Huracan"):
+        #     equipoSeleccionado = "Huracan"
+        #     print "Huracan"
         elif(btn == "Belgrano"):
             equipoSeleccionado = "Belgrano"
             print "Belgrano"
@@ -219,63 +303,121 @@ def yajugue():
         elif(btn == "Gimnasia"):
             equipoSeleccionado = "Gimnasia"
             print "Gimnasia"
-        elif(btn == "Colon"):
-            equipoSeleccionado = "Colon"
-            print "Colon"
-        elif(btn == "Velez"):
-            equipoSeleccionado = "Velez"
-            print "Velez"
-        elif(btn == "Lanus"):
-            equipoSeleccionado = "Lanus"
-            print "Lanus"
-        elif(btn == "Banfield"):
-            equipoSeleccionado = "Banfield"
-            print "Banfield"
-        elif(btn == "Atletico Tucuman"):
-            equipoSeleccionado = "Atletico Tucuman"
-            print "Atletico Tucuman"
-        elif(btn == "Temperley"):
-            equipoSeleccionado = "Temperley"
-            print "Temperley"
-        elif(btn == "Union"):
-            equipoSeleccionado = "Union"
-            print "Union"
-        elif(btn == "Tigre"):
-            equipoSeleccionado = "Tigre"
-            print "Tigre"
+        # elif(btn == "Colon"):
+        #     equipoSeleccionado = "Colon"
+        #     print "Colon"
+        # elif(btn == "Velez"):
+        #     equipoSeleccionado = "Velez"
+        #     print "Velez"
+        # elif(btn == "Lanus"):
+        #     equipoSeleccionado = "Lanus"
+        #     print "Lanus"
+        # elif(btn == "Banfield"):
+        #     equipoSeleccionado = "Banfield"
+        #     print "Banfield"
+        # elif(btn == "Atletico Tucuman"):
+        #     equipoSeleccionado = "Atletico Tucuman"
+        #     print "Atletico Tucuman"
+        # elif(btn == "Temperley"):
+        #     equipoSeleccionado = "Temperley"
+        #     print "Temperley"
+        # elif(btn == "Union"):
+        #     equipoSeleccionado = "Union"
+        #     print "Union"
+        # elif(btn == "Tigre"):
+        #     equipoSeleccionado = "Tigre"
+        #     print "Tigre"
         else:
             print "boom"
     else:
         print "No"
-    name = session['username']
-    perfilVisto = dicEsclavoToUltimoVisto[name]
-    print name
+    nameColaborador = session['username']
+    print nameColaborador
+
+    perfilVisto = dicColaboradorToUltimoVisto[nameColaborador]
     print perfilVisto
 
-    dicEsclavoToPerfilesTwitterVistos[name].append(perfilVisto)
-    dicUserToTuplasSeleccionadas[name].append([perfilVisto,equipoSeleccionado])
+    dicColaboradorToPerfilesVistos[nameColaborador].append(perfilVisto)
+    dicColaboradorToTuplasSeleccionadas[nameColaborador].append([perfilVisto,equipoSeleccionado])
 
     if (perfilVisto not in dicidTwitterCuentaToVotacion.keys()):
         dicidTwitterCuentaToVotacion[perfilVisto] = []
-        print "agregado"
+    #     print "agregado"
 
-    elementito = [name,equipoSeleccionado]
+    elementito = [nameColaborador,equipoSeleccionado]
     dicidTwitterCuentaToVotacion[perfilVisto].append(elementito)
 
-    agregar = registro(colaborador= name ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
+
+    global cantidadesHeap
+    global dicCantidadTOperfilesTwitter
+    global posiblesClaves
+    global dicperfilTwitterToCantidades
+
+    if(perfilVisto not in dicperfilTwitterToCantidades.keys()):
+        dicperfilTwitterToCantidades[perfilVisto] = 1
+        cantidadesHeap.add(1)
+        cantidad = 1
+    else:
+        cantidad = dicperfilTwitterToCantidades[perfilVisto] + 1
+        dicperfilTwitterToCantidades[perfilVisto] =  cantidad
+        cantidadesHeap.add(cantidad)
+        cantidadesHeap.remove(cantidad - 1)
+    if (cantidad in dicCantidadTOperfilesTwitter.keys()):
+        print "cantidad aparece"
+        if(cantidad > 3):
+            print "no agarro el else"
+            equipoDecidido = hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilVisto])
+            if(equipoDecidido):
+                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
+                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
+                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
+                posiblesClaves.remove(perfilVisto)
+                cantidadesHeap.remove(cantidad)                    
+            else:
+                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
+                # perfilesDeTwitterAagregar = perfilesDeTwitter.append(perfilVisto)
+                dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
+
+                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
+                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
+                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
+
+        else:
+            # print "agarro el else"
+            # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
+            # print perfilVisto
+            # print perfilesDeTwitter
+            dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
+            # print dicCantidadTOperfilesTwitter[cantidad]
+            if(cantidad != 1):
+                # print "entro a distinto"
+                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
+                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
+                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
+
+    else:
+        # print "aca"
+        # print perfilVisto
+        dicCantidadTOperfilesTwitter[cantidad] = [perfilVisto]
+        # print dicCantidadTOperfilesTwitter[cantidad]
+        # print "post aca"
+
+
+    agregar = registro(colaborador= nameColaborador ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
     agregar.save()
 
-    perfiles = dicEsclavoToPerfilesAver[name]
+    cantidadPerfilesAnalizados = dicColaboradorToprogessBar[nameColaborador]
+    cantidadPerfilesAnalizados = cantidadPerfilesAnalizados + 1
 
-    if(len(perfiles) > 0):
-        perfilAenviar = perfiles[0]
-        dicEsclavoToPerfilesAver[name]=perfiles[1:]
-        msg, twitterPerf = preparar.armarMensaje(perfilAenviar,perfilesDeTwitter)
-        dicEsclavoToUltimoVisto[name] = perfilAenviar
-        return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = twitterPerf)
+    if(cantidadPerfilesAnalizados == 10):
+        dicColaboradorToprogessBar[nameColaborador] = 0
+        return render_template('finJuego.html',env=env, user=nameColaborador)
     else:
-        return render_template('finJuego.html',env=env, user=name, votacion = dicUserToTuplasSeleccionadas[name])
-
+        perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
+        msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
+        dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
+        dicColaboradorToprogessBar[nameColaborador] = cantidadPerfilesAnalizados
+        return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName)
 
 @app.route('/callback')
 def callback_handling():
