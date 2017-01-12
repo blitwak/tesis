@@ -95,6 +95,7 @@ def obtenerPerfilAmirar(nameColaborador):
 
     cantidadAagregar = []
     vistosPorColaborador = dicColaboradorToPerfilesVistos[nameColaborador]
+    bloq=True
     while(True):
         if(len(cantidadesHeap)>0):
             cantidad = cantidadesHeap.pop()
@@ -110,7 +111,10 @@ def obtenerPerfilAmirar(nameColaborador):
                 cantidadesHeap.add(cant)    
             for posibleClave in posiblesClaves:
                 if posibleClave not in vistosPorColaborador:
-                    return posibleClave
+                    if(bloq):
+                        bloq = False
+                    else:
+                        return posibleClave
 def armarMensaje(clave):
     global perfilesDeTwitter
     perfil = perfilesDeTwitter[clave]
@@ -170,7 +174,10 @@ dicidTwitterCuentaToVotacion = {} #idTwitterCuenta ->user,choice
 def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
+ #       print "que onda?"
         if constants.PROFILE_KEY not in session:
+            print "vamo a index"
+            session.clear()
             return redirect('/')
         return f(*args, **kwargs)
     return decorated
