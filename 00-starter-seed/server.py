@@ -95,7 +95,6 @@ def obtenerPerfilAmirar(nameColaborador):
 
     cantidadAagregar = []
     vistosPorColaborador = dicColaboradorToPerfilesVistos[nameColaborador]
-    bloq = True
     while(True):
         if(len(cantidadesHeap)>0):
             cantidad = cantidadesHeap.pop()
@@ -111,10 +110,7 @@ def obtenerPerfilAmirar(nameColaborador):
                 cantidadesHeap.add(cant)    
             for posibleClave in posiblesClaves:
                 if posibleClave not in vistosPorColaborador:
-                    if(bloq == False):
-                        return posibleClave
-                    else:
-                        bloq = False
+                    return posibleClave
 def armarMensaje(clave):
     global perfilesDeTwitter
     perfil = perfilesDeTwitter[clave]
