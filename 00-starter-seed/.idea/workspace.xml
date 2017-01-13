@@ -21,10 +21,11 @@
       <file leaf-file-name="jugar.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/jugar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="245" column="0" lean-forward="true" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+            <state relative-caret-position="295">
+              <caret line="285" column="0" lean-forward="true" selection-start-line="285" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
               <folding>
-                <element signature="e#3175#3183#0" expanded="true" />
+                <element signature="e#2213#2221#0" expanded="true" />
+                <element signature="e#9981#9989#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -70,8 +71,8 @@
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/login.html" />
-        <option value="$PROJECT_DIR$/templates/jugar.html" />
         <option value="$PROJECT_DIR$/server.py" />
+        <option value="$PROJECT_DIR$/templates/jugar.html" />
       </list>
     </option>
   </component>
@@ -248,12 +249,12 @@
       <workItem from="1484275678313" duration="441000" />
       <workItem from="1484319898537" duration="197000" />
       <workItem from="1484324045145" duration="1209000" />
-      <workItem from="1484331710276" duration="2424000" />
+      <workItem from="1484331710276" duration="3422000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44842000" />
+    <option name="totallyTimeSpent" value="45840000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -304,7 +305,8 @@
         <state relative-caret-position="3825">
           <caret line="255" column="5" lean-forward="false" selection-start-line="255" selection-start-column="5" selection-end-line="255" selection-end-column="5" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -361,7 +363,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -371,7 +374,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -381,7 +385,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -398,7 +403,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -525,10 +531,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/jugar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="245" column="0" lean-forward="true" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+        <state relative-caret-position="295">
+          <caret line="285" column="0" lean-forward="true" selection-start-line="285" selection-start-column="0" selection-end-line="285" selection-end-column="0" />
           <folding>
-            <element signature="e#3175#3183#0" expanded="true" />
+            <element signature="e#2213#2221#0" expanded="true" />
+            <element signature="e#9981#9989#0" expanded="true" />
           </folding>
         </state>
       </provider>
