@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Inicio</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="menu-links">
+
+                <li class="active" id="comenzarJugar"><a href="#" class="btnjugar">Volver a jugar</a></li>
+                <li><a href="#" id="comojugar2">Cómo jugar?</a></li>
+                <li><a href="#" id="sobre2">De que trata la tesis?</a></li>
+                <li><a href="#" id="contact2">Contacto</a></li>
+                <li><a href="#" id="logout" class="btn-logout">Cerrar sesión</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="header">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading"> Muchas gracias {{user}}! </h1>
+            <hr>
+            <p>Terminaste una ronda de 10 perfiles de twitter. Podes volver a jugar!</p>
+            <div id="btn-central">
+                <a href="#" id="btncentral-jugar" class="btn btn-primary btn-xl page-scroll login btnjugar">Volver a jugar!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

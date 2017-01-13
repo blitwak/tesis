@@ -1,0 +1,121 @@
+body {
+
+}
+.header-content {
+    background-color: transparent;
+    /*margin-top: 50px;*/
+    /*padding: 10px;*/
+}
+.section-short {
+    padding: 50px 0;
+}
+.instructions {
+    font-size: 18px;
+}
+.instructions > li {
+    margin: 10px 0;
+}
+.bg-primary a {
+    color: #ffffff;
+}
+.bg-primary a:hover {
+    color: #bbb;
+}
+.wrapper {
+    margin-top: 80px;
+    padding: 15px;
+}
+.banner-img {
+    position: relative;
+    top:0;
+    width: 100%;
+    min-height: 180px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position: center;
+    /*background-image: url('../temp/banner.jpg');*/
+    text-align: left;
+    color: white;
+}
+.profile-img {
+    border: 4px solid #fff;
+    border-radius: 20px;
+    max-width: 190px;
+
+}
+.table-equipos
+{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top:0;
+    display-inside: auto;
+    width: 100%;
+    min-height: 180px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-position: center;
+    /*background-image: url('../temp/banner.jpg');*/
+}
+.profile-container{
+    position: absolute;
+    top: 155px;
+    left: 20px;
+    color: #333;
+    z-index: 3;
+}
+.profile-text {
+    max-width: 180px;
+}
+.btn-equipos
+{
+    /*background-image:url(../public/static/imagenes/equiposbotones/sanlorenzo.png); height: 65px; width:67px; background-color: transparent; border: transparent;*/
+    /*background-image:url(../imagenes/equiposbotones/Boca.png);*/
+    height: 65px;
+    width:67px;
+    background-color: transparent;
+    border: transparent;
+}
+@media (max-width: 991px) {
+    .profile-img {
+        border: 4px solid #fff;
+        border-radius: 20px;
+        max-height: 140px;
+    }
+    .profile-container {
+        float: left;
+        position: relative;
+        top:80px;
+        /*top: 20px;*/
+        /*left: 20px;*/
+        margin-bottom: 80px;
+    }
+    .profile-text {
+        max-width: 100%;
+    }
+    .table-equipos
+    {
+        /*display: flex;*/
+        /*justify-content: space-between;*/
+        max-width: 100%;
+        width: 100%;
+        max-height: 140px;
+        position: relative;
+        top:80px;
+        margin-bottom: 80px;
+
+        /*text-align: center;*/
+    }
+}
+.progress-bar {
+    background-color: rgba(240, 95, 64, 0.9);
+}
+.progress {
+    background-color: #fff;
+}

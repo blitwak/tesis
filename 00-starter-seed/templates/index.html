@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block content %}
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Hola {{user['nickname']}}! </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="menu-links">
+
+                <li class="active" id="comenzarJugar"><a href="#" class="btnjugar">Jugar</a></li>
+                <li><a href="#comojugar">Cómo jugar?</a></li>
+                <li><a href="#sobre">De que trata la tesis?</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#" id="logout" class="btn-logout">Cerrar sesión</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="header">
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1 id="homeHeading">Dime quien twittea, y te dir&eacute; de qu&eacute; cuadro es </h1>
+            <hr>
+            <p>El objetivo de esta página web es etiquetar a los usuarios de Twitter con respecto al equipo de fútbol de Argentina que son hinchas para la utilización en una tesis de Licenciatura en Ciencias de la Computación del departamento de computación de la Facultad de Ciencias Exactas y Naturales de la Universidad de Buenos Aires.</p>
+            <div id="btn-central">
+                <a href="#" id="btncentral-jugar" class="btn btn-primary btn-xl page-scroll login btnjugar">Jugar!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="bg-dark section-short" id="comojugar" name="comojugar">
+    <div class="container"  id="comojugar2" name="comojugar2">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 text-center">
+                <h2 class="section-heading">C&oacute;mo jugar</h2>
+                <hr class="light">
+                <ul class="text-left instructions">
+                    <li>Ingresar con un usuario de Facebook, Gmail, Hotmail, Twitter, Linkedin.
+                        <br/><small>Nota: No utilizó, compartó ni almacenó tus datos de ingreso. Lo necesito para saber que es una persona real que está colaborando</small></li><br>
+                    <li>Hacer click en Jugar. Al realizar esto, se inicia un juego con una tanda de 10 perfiles de twitter</li><br>
+                    <li>Se mostrará primero un perfil de twitter. Basandote en su nombre de usuario, tweets, y sus fotos de perfil y portada, ¿podes inferir el equipo por el cual es hincha?</li>
+                    <li>En caso de no poder inferir de qué equipo es hincha el usuario, hacer click en "No se"</li>
+                    <li>Si crees que puedes adivinar, elegí un equipo de la lista. Si el equipo por el que vas no está en la lista, elegí "ninguno"</li>
+                    <li>En caso de haber completado los 10 perfiles de Twitter que se muestran por partida, ha completado el juego! Puede optar por volver a jugar!</li>
+                    <li>Caso contrario, se mostrará un nuevo perfil de Twitter hasta decidir los 10 perfiles de Twitter sin importar que hayas acertado o no</li>
+                </ul>
+
+                <p style="margin-top: 15px;"> Cualquier consulta <a href="#contact">contactame</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-short" id="sobre">
+    <div class="container">
+        <div class="col-sm-12">
+            <h2>Sobre mi tesis</h2>
+            <p>
+                La tesis trata sobre ver cómo influyen los resultados de los partidos de fútbol de el equipo favorito en los estado de ánimo del usuario en la red social Twitter, analizando los sentimientos de los tweets: Es un tweet positivo? Negativo?
+            </p>
+            <p>
+                Algunas de las preguntas que queremos responder son, por ejemplo, si en base al resultado de los partidos de fútbol, podemos predecir el estado de humor del hincha. Esto puede servir para saber cuando dar una noticia a los hinchas.
+            </p>
+            <p>
+                Otra pregunta que intentamos responder es si en base al estado de ánimo de los hinchas previo al partido podemos adivinar el resultado del partido de fútbol.  Esto puede servir para realizar un sistema que juegue al prode o realice apuestas en internet.
+            </p>
+            <p>
+                Por ende necesitamos primero reconocer quien es un hincha y de que equipo es.
+                Para esto último, necesitamos su ayuda!
+            </p>
+            <p>
+                Les pedimos que vean perfiles de twitter, y decidan el equipo el cual es hincha en caso de que se pueda reconocer.
+                Muchas gracias!
+            </p>
+        </div>
+    </div>
+</section>
+
+<aside class="bg-dark">
+    <div class="container text-center">
+        <div class="call-to-action">
+            <h2>Estas listo para jugar?</h2>
+            <div id="btn-abajo">
+                <a href="#" id="btnabajo-jugar" class="btn btn-default btn-xl sr-button login btnjugar">Jugar!</a>
+            </div>
+            <!--<a href="/jugarPrimeraVez" class="btn btn-default btn-xl sr-button jugar">jugar</a>-->
+        </div>
+    </div>
+</aside>
+
+<script type="text/javascript">
+    $( window ).load(function()
+    {
+        console.log("Entramos")
+
+//        console.log(user['nickname'])
+//        var megauser = "{{user['nickname']}}";
+//        console.log(megauser);
+
+//        var usernameSession = sessionStorage.getItem("SessionName");
+//        var texto = "Hola " + usernameSession + "!";
+//        $('#saludo').text(texto);
+
+        var login = sessionStorage.getItem("userdata");
+//        console.log(login);
+
+        if(login == null)
+        {
+            sessionStorage.SessionName = "SessionData";
+            var megauser = "{{user['nickname']}}";
+//            console.log(megauser);
+            var userdata = "{{user}}";
+//            console.log(userdata);
+            sessionStorage.setItem("username",megauser);
+            sessionStorage.setItem("userdata",userdata);
+        }
+        else
+        {
+//            console.log("entre por el else");
+            var parte = sessionStorage.getItem("parte");//comojugar
+            console.log(parte);
+            if (parte == "comojugar") {
+                document.getElementById("comojugar2").scrollIntoView();
+            }
+            else if (parte == "sobre2")
+            {
+                document.getElementById("sobre").scrollIntoView();
+            }
+            else if (parte == "contact2")
+            {
+                document.getElementById("contact").scrollIntoView();
+            }
+            sessionStorage.setItem("parte","");
+//            sessionStorage.clear();
+        }
+        console.log("Fin")
+    });
+
+</script>
+
+
+
+<!--<input type="hidden" id="usuario" name="usuario" />-->
+
+{% endblock %}

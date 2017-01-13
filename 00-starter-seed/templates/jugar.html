@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% block content %}
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top" id="saludo">Hola  </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right" id="menu-links">
+                <li><a href="#" id = "comojugar2">Cómo jugar?</a></li>
+                <li><a href= "#" id = "sobre2">De que trata la tesis?</a></li>
+                <li><a href="#contact" id = "contactoenjugar">Contacto</a></li>
+                <li><a href="#" id="logout2" class="btn-logout">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<script type="text/javascript">
+        var login = sessionStorage.getItem("username");
+//        console.log(login);
+        $('#saludo').text("Gracias " + login + "!");
+
+</script>
+
+
+<div class="wrapper">
+    <div class="container" >
+        <form method="post" action="/yajugue">
+            <div class="row" style="background-color: #f2f2f2;padding:15px;">
+                <div class="progress">
+                    <div class="progress-bar" id="progressbar" name="progressbar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                    </div>
+                </div>
+
+
+
+                <script type="text/javascript">
+
+
+//                var tweetsAnalizados = Number(sessionStorage.getItem("tweetsAnalizados"));
+//                if (tweetsAnalizados == null)
+//                {
+//                sessionStorage.setItem("tweetsAnalizados", 0);
+//                tweetsAnalizados = 0;
+//                }
+//                else if(tweetsAnalizados == 10)
+//                {
+//                sessionStorage.setItem("tweetsAnalizados", 1);
+//                tweetsAnalizados = 1
+//                }
+//                else
+//                {
+//                tweetsAnalizados = tweetsAnalizados + 1;
+//                sessionStorage.setItem("tweetsAnalizados", tweetsAnalizados);
+//                }
+//                tweetsAnalizados = tweetsAnalizados - 1;
+                var tweetsAnalizados = '{{cantidadPerfilesAnalizados}}';
+                var porc = tweetsAnalizados + "0%";
+//                console.log(tweetsAnalizados);
+//                console.log(porc);
+
+                $('#progressbar').css('width', porc);
+                var cuantos = tweetsAnalizados + "/10";
+                //        $("#progressbar").innerText = cuantos;
+                $(".progress-bar").innerText = cuantos;
+                //        $("#progressbar").innerValue = cuantos;
+                $('#progressbar').text(cuantos);
+
+                </script>
+
+
+                <div class="h2">Podes inducir de qu&eacute; club es hincha este perfil de twitter? </div>
+                    <div class="col-md-5">
+                        <label for="teams">Club:<br></label><br>
+                        <!--<div class="center-block">-->
+                        <div class="btn-group">
+                            <table class="table-equipos">
+                                <tr>
+                                    <td><button name= "btn1" title="" id="btn1" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""  id="btn2" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"   title=""  id="btn3"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""    id="btn4" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""   id="btn5"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"   title=""   id="btn6" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""   id="btn7"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                <!--</tr>-->
+                                <!--&lt;!&ndash;<input type="submit" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />&ndash;&gt;-->
+                                <!--<tr>-->
+                                    <td><button name= "btn1"  title=""   id="btn8"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""   id="btn9"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""   id="btn10"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"   title=""   id="btn11" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"  title=""   id="btn12"  type="submit" class="btn btn-default btn-equipos"></button></td>
+                                    <td><button name= "btn1"   title=""   id="btn13" type="submit" class="btn btn-default btn-equipos"></button></td>
+                                </tr>
+                                <tr>
+                                    <td><label id="lbl1"></label></td>
+                                    <td><label id="lbl2"></label></td>
+                                    <td><label id="lbl3"></label></td>
+                                    <td><label id="lbl4"></label></td>
+                                    <td><label id="lbl5"></label></td>
+                                    <td><label id="lbl6"></label></td>
+                                    <td><label id="lbl7"></label></td>
+                                    <td><label id="lbl8"></label></td>
+                                    <td><label id="lbl9"></label></td>
+                                    <td><label id="lbl10"></label></td>
+                                    <td><label id="lbl11"></label></td>
+                                    <td><label id="lbl12"></label></td>
+                                    <td><label id="lbl13"></label></td>
+                                </tr>
+
+                            </table>
+
+                            <!--<table>-->
+                                <!--<tr>-->
+                                    <!--<td><button name= "btn1" value = "Boca" title="boca" id="btn9"  type="submit" class="btn btn-default" style="background-image:url(../public/static/imagenes/equiposbotones/sanlorenzo.png); height: 65px; width:67px; background-color: transparent; border: transparent;></button></td>-->
+                            <!--</table>-->
+                        </div>
+                        <!--</div>-->
+                    </div>
+            </div>
+            <script type="text/javascript">
+                function shuffle(array) {
+                    var currentIndex = array.length, temporaryValue, randomIndex;
+
+                    // While there remain elements to shuffle...
+                    while (0 !== currentIndex) {
+
+                        // Pick a remaining element...
+                        randomIndex = Math.floor(Math.random() * currentIndex);
+                        currentIndex -= 1;
+
+                        // And swap it with the current element.
+                        temporaryValue = array[currentIndex];
+                        array[currentIndex] = array[randomIndex];
+                        array[randomIndex] = temporaryValue;
+                    }
+
+                    return array;
+                }
+                var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Belgrano","Talleres","Rosario central","Newell's","Estudiantes de la plata","Gimnasia"]
+
+                // var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Huracan","Belgrano","Talleres","Rosario central","Newell's","Estudiantes de la plata","Gimnasia","Colon","Velez","Lanus","Banfield","Atletico Tucuman","Temperley","Union","Tigre"]
+//                var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Huracan","Belgrano","Talleres","Rosario central","Newell's","Estudiantes de la plata","Gimnasia","Colon","Velez","Lanus","Banfield","Atlético Tucumán","Temperley","Union","Tigre"]
+
+                teams = shuffle(teams);
+
+                for (i = 0; i < teams.length; i++) {
+                    var texto = teams[i];
+                    var nombrebtn = '#btn' + (i+1)+'';
+                    var nombrelbl ='#lbl' + (i+1)+'';
+                   $(nombrebtn).attr('title', texto);
+                    $(nombrebtn).attr('value', texto);
+                   $(nombrelbl).text(texto);
+
+                   //                    if(texto != "No se" && texto != "Ninguno")
+//                    {
+//                        console.log(texto);
+                        texto = texto.replace(/ /g ,"_");
+                        texto = texto.replace("'","_");
+                        path = 'url(../public/static/imagenes/equiposbotones/'+texto+'.png)';
+//                        console.log(path);
+                       $(nombrebtn).css("background-image", path);
+//                    }
+                }
+            </script>
+
+            <div class="row" style="margin-top: 10px;">
+                <div id="backgroundiv" name="backgroundiv" class="banner-img text-left">
+                    <div class="profile-container">
+                        <img  id="imageprofile" name="imageprofile"  alt="imagen de perfil" class="profile-img" />
+                        <div name="screenName" id = "screenName" class="h3">
+                        </div>
+                        <div style="color:#888;">
+                            <p name="screentwit" id="screentwit">
+                            </p>
+                        </div>
+                        <div class="profile-text" name="biografia" id="biografia">
+                        </div>
+
+
+                    </div>
+                </div>
+
+             </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <a id="tweetslinksuser" name="tweetslinksuser" class="twitter-timeline" href = "https://twitter.com/{{nombreDelUsuario}}">Tweets by {{nombreDelUsuario}}</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+
+            <!-- <label  hidden id="lblperfiles"> {{perfiles}} </label> -->
+
+        </form>
+
+
+        <div class="row" style="background-color: #f2f2f2;padding:15px;">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                    6/10
+                </div>
+            </div>
+
+            <div class="h2">De qu&eacute; club es la persona de este usuario de twitter? </div>
+            <div class="col-md-5">
+                <label for="teams2">Club:<br></label><br>
+                <select id="teams2" name="teams" class="form-control" title="Equipos">
+                    <option value="No se">No se</option>
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="Boca">Boca</option>
+                    <option value="River">River</option>
+                    <option value="Racing">Racing</option>
+                    <option value="Independiente">Independiente</option>
+                    <option value="San Lorenzo">San Lorenzo</option>
+                    <option value="Huracan">Huracan</option>
+                    <option value="Belgrano">Belgrano</option>
+                    <option value="Talleres">Talleres</option>
+                    <option value="Rosario central">Rosario central</option>
+                    <option value="Newell's">Newell's</option>
+                    <option value="Estudiantes de la plata">Estudiantes de la plata</option>
+                    <option value="Gimnasia">Gimnasia</option>
+                    <option value="Colon">Colon</option>
+                    <option value="Velez">Velez</option>
+                    <option value="Lanus">Lanus</option>
+                    <option value="Banfield">Banfield</option>
+                    <option value="Atlético Tucumán">Atlético Tucumán</option>
+                    <option value="Temperley">Temperley</option>
+                    <option value="Union">Union</option>
+                    <option value="Tigre">Tigre</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="submit" id="submit2" class="btn btn-primary" style="margin-top:25px; padding-left:15px;padding-right: 15px;" value="Siguiente" />
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<hr style="border:1px solid #bbb; max-width: 70%; margin-top: 15px;"/>
+<script type="text/javascript" charset="utf-8">
+
+    $( window ).load(function() 
+    {
+        var usernameSession = sessionStorage.getItem("SessionName");
+
+//        var perfiles = '{{perfiles | safe }}';
+
+        var perfiles = {{perfiles | safe }};
+
+
+           console.log(perfiles);
+
+//        s = perfiles.replace(/\\n/g, "\\n")
+//            .replace(/\\'/g, "\\'")
+//            .replace(/\\"/g, '\\"')
+//            .replace(/\\&/g, "\\&")
+//            .replace(/\\r/g, "\\r")
+//            .replace(/\\t/g, "\\t")
+//            .replace(/\\b/g, "\\b")
+//            .replace(/\\f/g, "\\f");
+//        s = s.replace(/[\u0000-\u0019]+/g,"");
+//        var result = JSON.parse(s);
+//        console.log(result);
+
+//        var linkbanner = result['image'];
+//        $('#backgroundiv').css("background-image", "url("+ linkbanner+")");
+//        $("#imageprofile").attr("src",result["banner"]);
+//        screenName.innerText = result["name"];
+//        var scr =  "@"+result["screenName"];
+//        screentwit.innerText = scr;
+//        biografia.innerText = result["desc"];
+
+        var linkbanner = perfiles['image'];
+        $('#backgroundiv').css("background-image", "url("+ linkbanner+")");
+        $("#imageprofile").attr("src",perfiles["banner"]);
+        screenName.innerText = perfiles["name"];
+        var scr =  "@"+perfiles["screenName"];
+        screentwit.innerText = scr;
+        biografia.innerText = perfiles["desc"];
+    });
+
+</script>
+{% endblock %}
+
