@@ -40,9 +40,10 @@ app.debug = True
 
 
 class registro(db.Document):
-	colaborador = db.StringField()
-	perfilDeTwitter = db.IntField()
-	choice = db.StringField()
+    colaborador = db.StringField()
+    perfilDeTwitterID = db.IntField()
+    choice = db.StringField()
+    perfilDeTwitterScreenName = db.StringField()
 
 #db.registro.find().count()
 #use test
@@ -234,7 +235,7 @@ def jugarPrimeraVez():
     msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
 
     dicColaboradorToprogessBar[nameColaborador] = 0 
-    dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
+    dicColaboradorToUltimoVisto[nameColaborador] = [perfilDeTwitterID,perfilDeTwitterScreenName]
 
     return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName,cantidadPerfilesAnalizados = 0)
 
@@ -294,28 +295,28 @@ def yajugue():
     nameColaborador = session['username']
     print nameColaborador
 
-    perfilVisto = dicColaboradorToUltimoVisto[nameColaborador]
-    print perfilVisto
+    [perfilDeTwitterID,perfilDeTwitterScreenName] = dicColaboradorToUltimoVisto[nameColaborador]
+    print perfilDeTwitterID
 
-    dicColaboradorToPerfilesVistos[nameColaborador].append(perfilVisto)
-    dicColaboradorToTuplasSeleccionadas[nameColaborador].append([perfilVisto,equipoSeleccionado])
+    dicColaboradorToPerfilesVistos[nameColaborador].append(perfilDeTwitterID)
+    dicColaboradorToTuplasSeleccionadas[nameColaborador].append([perfilDeTwitterID,equipoSeleccionado])
 
-    if (perfilVisto not in dicidTwitterCuentaToVotacion.keys()):
-        dicidTwitterCuentaToVotacion[perfilVisto] = []
+    if (perfilDeTwitterID not in dicidTwitterCuentaToVotacion.keys()):
+        dicidTwitterCuentaToVotacion[perfilDeTwitterID] = []
 
     elementito = [nameColaborador,equipoSeleccionado]
-    dicidTwitterCuentaToVotacion[perfilVisto].append(elementito)
+    dicidTwitterCuentaToVotacion[perfilDeTwitterID].append(elementito)
 
     # HACER LA MAGIA DE COLABORADR
-    if( len(dicidTwitterCuentaToVotacion[perfilVisto]) > 3):
-        if(hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilVisto])):
+    if( len(dicidTwitterCuentaToVotacion[perfilDeTwitterID]) > 10):
+        posiblesClaves.remove(perfilDeTwitterID)
+    elif( len(dicidTwitterCuentaToVotacion[perfilDeTwitterID]) > 3):
+        if(hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilDeTwitterID])):
             #borro de posibles claves
-            posiblesClaves.remove(perfilVisto)
-#        else:
-#    else:
+            posiblesClaves.remove(perfilDeTwitterID)
 
 
-    agregar = registro(colaborador= nameColaborador ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
+    agregar = registro(colaborador= nameColaborador ,perfilDeTwitterID= perfilDeTwitterID,choice=equipoSeleccionado,perfilDeTwitterScreenName = perfilDeTwitterScreenName)
     agregar.save()
 
     cantidadPerfilesAnalizados = dicColaboradorToprogessBar[nameColaborador]
@@ -327,7 +328,7 @@ def yajugue():
     else:
         perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
         msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
-        dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
+        dicColaboradorToUltimoVisto[nameColaborador] = [perfilDeTwitterID,perfilDeTwitterScreenName]
         dicColaboradorToprogessBar[nameColaborador] = cantidadPerfilesAnalizados
         return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName, cantidadPerfilesAnalizados=cantidadPerfilesAnalizados)
 
