@@ -217,27 +217,33 @@ def jugarPrimeraVez():
  #   global dicEsclavoToPerfilesTwitterVistos
   #  global dicUserToTuplasSeleccionadas
 
-    global dicColaboradorToTuplasSeleccionadas
-    global dicColaboradorToPerfilesVistos
-    global dicColaboradorToUltimoVisto
+	global dicColaboradorToTuplasSeleccionadas
+	global dicColaboradorToPerfilesVistos
+	global dicColaboradorToUltimoVisto
 
-    nameColaborador = session[constants.PROFILE_KEY]['nickname']
-    print nameColaborador
+	nameColaborador = session[constants.PROFILE_KEY]['nickname']
+	print nameColaborador
 
-    if nameColaborador not in dicColaboradorToPerfilesVistos.keys():
-        dicColaboradorToPerfilesVistos[nameColaborador]= []
+	if nameColaborador not in dicColaboradorToPerfilesVistos.keys():
+		dicColaboradorToPerfilesVistos[nameColaborador]= []
 
-    if nameColaborador not in dicColaboradorToTuplasSeleccionadas.keys():
-        dicColaboradorToTuplasSeleccionadas[nameColaborador]= []
+	if nameColaborador not in dicColaboradorToTuplasSeleccionadas.keys():
+		dicColaboradorToTuplasSeleccionadas[nameColaborador]= []
 
-    perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
+	perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
 
-    msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
+	msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
 
-    dicColaboradorToprogessBar[nameColaborador] = 0 
-    dicColaboradorToUltimoVisto[nameColaborador] = [perfilDeTwitterID,perfilDeTwitterScreenName]
 
-    return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName,cantidadPerfilesAnalizados = 0)
+	if (nameColaborador in dicColaboradorToprogessBar.keys()):
+		cantidadPerfilesAnalizados = dicColaboradorToprogessBar[nameColaborador]
+	else:
+		dicColaboradorToprogessBar[nameColaborador] = 0
+		cantidadPerfilesAnalizados = 0
+
+	dicColaboradorToUltimoVisto[nameColaborador] = [perfilDeTwitterID,perfilDeTwitterScreenName]
+
+	return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName,cantidadPerfilesAnalizados = cantidadPerfilesAnalizados)
 
 
 @app.route('/yajugue', methods=['POST'])
@@ -282,9 +288,9 @@ def yajugue():
         elif(btn == "Newell's"):
             equipoSeleccionado = "Newell's"
             print "Newell's"
-        elif(btn == "Estudiantes de la plata"):
-            equipoSeleccionado = "Estudiantes de la plata"
-            print "Estudiantes de la plata"
+        elif(btn == "Estudiantes"):
+            equipoSeleccionado = "Estudiantes"
+            print "Estudiantes"
         elif(btn == "Gimnasia"):
             equipoSeleccionado = "Gimnasia"
             print "Gimnasia"
