@@ -14,7 +14,8 @@ from flask_mongoalchemy import MongoAlchemy
 import constants
 import codecs
 from sortedcontainers import SortedList
-from flask import Markup
+import heapq
+#from flask import Markup
 #https://pythonhosted.
 
 # Load Env variables
@@ -52,7 +53,12 @@ global cantPerfilesAmostrar
 cantPerfilesAmostrar = 10
 
 global cantidadesHeap
-cantidadesHeap = SortedList()
+cantidadesHeap = []
+heapq.heapify(cantidadesHeap)             # for a min heap
+heapq._heapify_max(cantidadesHeap)        # for a maxheap!!
+#cantidadesHeap = SortedList()
+#http://stackoverflow.com/questions/2501457/what-do-i-use-for-a-max-heap-implementation-in-python
+#https://pymotw.com/2/heapq/
 
 global dicCantidadTOperfilesTwitter
 dicCantidadTOperfilesTwitter = {}
@@ -101,17 +107,53 @@ def obtenerPerfilAmirar(nameColaborador):
     bloq=True
     while(True):
         if(len(cantidadesHeap)>0):
-            cantidad = cantidadesHeap.pop()
+#            cantidad = cantidadesHeap.pop()
+            print "---------------"
+            print cantidadesHeap
+            print "---------------"
+
+            cantidad = heapq.heappop(cantidadesHeap)
+
+
+            #AGREGO ESTO
+#            heapq.heappush(cantidadesHeap, cantidad)
+
+            print "---------------"
+            print cantidadesHeap
+            print "---------------"
+
             perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
             for perilTwitter in perfilesDeTwitter:
                 if (perilTwitter not in vistosPorColaborador):
                     for cant in cantidadAagregar:
-                        cantidadesHeap.add(cant)    
+#                        cantidadesHeap.add(cant)    
+                        print "---------------"
+                        print cantidadesHeap
+                        print "---------------"
+
+                        heapq.heappush(cantidadesHeap, cant)
+
+                        print "---------------"
+                        print cantidadesHeap
+                        print "---------------"
+
                     return perilTwitter
             cantidadAagregar.append(cantidad)
         else:
             for cant in cantidadAagregar:
-                cantidadesHeap.add(cant)    
+#                cantidadesHeap.add(cant)    
+                print "---------------"
+                print cantidadesHeap
+                print "---------------"
+
+                heapq.heappush(cantidadesHeap, cant)
+
+                print "---------------"
+                print cantidadesHeap
+                print "---------------"
+
+
+
             for posibleClave in posiblesClaves:
                 if posibleClave not in vistosPorColaborador:
                     return posibleClave
@@ -337,15 +379,50 @@ def yajugue():
 
     if(perfilVisto not in dicperfilTwitterToCantidades.keys()):
         dicperfilTwitterToCantidades[perfilVisto] = 1
-        cantidadesHeap.add(1)
+#        cantidadesHeap.add(1)
+        heapq.heappush(cantidadesHeap, 1)
+        print "---------------"
+        print cantidadesHeap
+        print "---------------"
         cantidad = 1
     else:
         cantidad = dicperfilTwitterToCantidades[perfilVisto] + 1
         print cantidad
         print cantidadesHeap
         dicperfilTwitterToCantidades[perfilVisto] =  cantidad
-        cantidadesHeap.add(cantidad)
-        cantidadesHeap.remove(cantidad - 1)#OJO ACA
+#        cantidadesHeap.add(cantidad)
+        heapq.heappush(cantidadesHeap, cantidad)
+
+        print "---------------"
+        print cantidadesHeap
+        print "---------------"
+
+
+
+
+#http://stackoverflow.com/questions/10162679/python-delete-element-from-heap
+        # cantidadesHeap.remove(cantidad - 1)#OJO ACA se colgaron dos personas en decidir
+#        heapq.heappop(cantidadesHeap)
+
+
+#SACAR EL ANTERIOR
+
+        # print "---------------"
+        # print cantidadesHeap
+        # print "---------------"
+        # indexHeap = cantidadesHeap.index(cantidad-1)
+        # cantidadesHeap[indexHeap] = cantidadesHeap[-1]
+        # cantidadesHeap.pop()
+        # heapq.heapify(cantidadesHeap)
+
+        # print "---------------"
+        # print cantidadesHeap
+        # print "---------------"
+
+
+
+
+
     if (cantidad in dicCantidadTOperfilesTwitter.keys()):
         print "cantidad aparece"
         if(cantidad > 3):
@@ -354,7 +431,33 @@ def yajugue():
             if(equipoDecidido):
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
                 posiblesClaves.remove(perfilVisto)
-                cantidadesHeap.remove(cantidad)                    
+
+
+
+
+
+
+#http://stackoverflow.com/questions/10162679/python-delete-element-from-heap
+    #            cantidadesHeap.remove(cantidad)                    
+
+                indexHeap = cantidadesHeap.index(cantidad)
+                print "---------------"
+                print cantidadesHeap
+                print "---------------"
+
+                cantidadesHeap[indexHeap] = cantidadesHeap[-1]
+                cantidadesHeap.pop()
+                heapq.heapify(h)
+                print "---------------"
+                print cantidadesHeap
+                print "---------------"
+
+
+
+
+
+
+
             else:
                 dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
