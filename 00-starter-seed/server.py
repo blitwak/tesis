@@ -95,74 +95,22 @@ dicperfilTwitterToCantidades = {}
 global dicColaboradorToprogessBar
 dicColaboradorToprogessBar = {}
 
+# global dicPerfilToDecidido
+# dicPerfilToDecidido = {}
+
+# for posibleClave in posiblesClaves:
+#     dicPerfilToDecidido[posibleClave] = False
+
+
 def obtenerPerfilAmirar(nameColaborador):
-    global cantidadesHeap
-    global dicCantidadTOperfilesTwitter
-    global posiblesClaves
-    global dicColaboradorToPerfilesVistos
-
-
-    cantidadAagregar = []
     vistosPorColaborador = dicColaboradorToPerfilesVistos[nameColaborador]
-    bloq=True
-    while(True):
-        if(len(cantidadesHeap)>0):
-#            cantidad = cantidadesHeap.pop()
-            print "---------------"
-            print cantidadesHeap
-            print "---------------"
-
-            cantidad = heapq.heappop(cantidadesHeap)
+    for posiblePerfil in posiblesClaves:
+        if(posiblePerfil not in vistosPorColaborador):
+            return posiblePerfil
+    print "No hay mas perfiles"
+    return null
 
 
-            #AGREGO ESTO
-#            heapq.heappush(cantidadesHeap, cantidad)
-
-            print "---------------"
-            print cantidadesHeap
-            print "---------------"
-            print cantidad
-            perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
-            for perilTwitter in perfilesDeTwitter:
-                if (perilTwitter not in vistosPorColaborador):
-                    for cant in cantidadAagregar:
-#                        cantidadesHeap.add(cant)    
-                        print "---------------"
-                        print cantidadesHeap
-                        print "---------------"
-
-                        heapq.heappush(cantidadesHeap, cant)
-
-                        print "---------------"
-                        print cantidadesHeap
-                        print "---------------"
-                    heapq.heappush(cantidadesHeap, cantidadesHeap)
-                    return perilTwitter
-            cantidadAagregar.append(cantidad)
-        else:
-            for cant in cantidadAagregar:
-#                cantidadesHeap.add(cant)    
-                print "---------------"
-                print cantidadesHeap
-                print "---------------"
-
-                heapq.heappush(cantidadesHeap, cant)
-
-                print "---------------"
-                print cantidadesHeap
-                print "---------------"
-
-
-
-            for posibleClave in posiblesClaves:
-                if posibleClave not in vistosPorColaborador:
-                    return posibleClave
-            print "no hay mas perfiles"
-
-                    # if(bloq):
-                    #     bloq = False
-                    # else:
-                    #     return posibleClave
 def armarMensaje(clave):
     global perfilesDeTwitter
     perfil = perfilesDeTwitter[clave]
@@ -189,7 +137,7 @@ def hayMayoriaDeEquipo(listaVotacion):
     limite = cantVotantes * 0.75
     for votado in equipoSeleccionado.keys():
         cantidadVotos = equipoSeleccionado[votado]
-        if(cantidadVotos > limite):
+        if(cantidadVotos >= limite):
             print "Ya esta decidido"
             return True
     return False
@@ -283,30 +231,18 @@ def jugarPrimeraVez():
 
     perfilDeTwitterID = obtenerPerfilAmirar(nameColaborador)
 
-#    perfiles = preparar.obtenerPerfiles(name,dicEsclavoToPerfilesTwitterVistos,perfilesDeTwitter,dicPerfilesDeTwitterToCantidadVistos,cantPerfilesAmostrar) #perfilesDeTwitter[0:2]    #MIRAR ESTOOOOOOOOOOOOO SELECCION DE PERFILES
- #   print perfiles
-  #  perfilAenviar = perfiles[0]
-   # dicEsclavoToPerfilesAver[name]=perfiles[1:]
-
     msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
 
-    print msg
     dicColaboradorToprogessBar[nameColaborador] = 0 
     dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
-#    value = Markup(msg)
+
     return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName,cantidadPerfilesAnalizados = 0)
 
 
 @app.route('/yajugue', methods=['POST'])
 def yajugue():
-    # global asd
-    # global dicEsclavoToPerfilesTwitterVistos
     global dicColaboradorToTuplasSeleccionadas
     global dicColaboradorToprogessBar
-    # global dicidTwitterCuentaToVotacion
-    # global dicEsclavoToPerfilesAver
-    # global dicEsclavoToUltimoVisto
-
 
     formulario = request.form
     if("btn1" in formulario):
@@ -366,103 +302,18 @@ def yajugue():
 
     if (perfilVisto not in dicidTwitterCuentaToVotacion.keys()):
         dicidTwitterCuentaToVotacion[perfilVisto] = []
-    #     print "agregado"
 
     elementito = [nameColaborador,equipoSeleccionado]
     dicidTwitterCuentaToVotacion[perfilVisto].append(elementito)
 
+    # HACER LA MAGIA DE COLABORADR
+    if( len(dicidTwitterCuentaToVotacion[perfilVisto]) > 3):
+        if(hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilVisto])):
+            #borro de posibles claves
+            posiblesClaves.remove(perfilVisto)
+#        else:
+#    else:
 
-    global cantidadesHeap
-    global dicCantidadTOperfilesTwitter
-    global posiblesClaves
-    global dicperfilTwitterToCantidades
-
-    if(perfilVisto not in dicperfilTwitterToCantidades.keys()):
-        dicperfilTwitterToCantidades[perfilVisto] = 1
-#        cantidadesHeap.add(1)
-        # heapq.heappush(cantidadesHeap, 1)
-        print "---------------"
-        print cantidadesHeap
-        print "---------------"
-        cantidad = 1
-    else:
-        cantidad = dicperfilTwitterToCantidades[perfilVisto] + 1
-        print cantidad
-        print cantidadesHeap
-        dicperfilTwitterToCantidades[perfilVisto] =  cantidad
-#        cantidadesHeap.add(cantidad)
-        # heapq.heappush(cantidadesHeap, cantidad)
-
-        print "---------------"
-        print cantidadesHeap
-        print "---------------"
-
-
-
-
-#http://stackoverflow.com/questions/10162679/python-delete-element-from-heap
-        # cantidadesHeap.remove(cantidad - 1)#OJO ACA se colgaron dos personas en decidir
-#        heapq.heappop(cantidadesHeap)
-
-
-#SACAR EL ANTERIOR
-
-        # print "---------------"
-        # print cantidadesHeap
-        # print "---------------"
-        # indexHeap = cantidadesHeap.index(cantidad-1)
-        # cantidadesHeap[indexHeap] = cantidadesHeap[-1]
-        # cantidadesHeap.pop()
-        # heapq.heapify(cantidadesHeap)
-
-        # print "---------------"
-        # print cantidadesHeap
-        # print "---------------"
-
-    if (cantidad in dicCantidadTOperfilesTwitter.keys()):
-        print "cantidad aparece"
-        if(cantidad > 3):
-            print "no agarro el else"
-            equipoDecidido = hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilVisto])
-            if(equipoDecidido):
-                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
-                posiblesClaves.remove(perfilVisto)
-
-
-
-
-
-
-#http://stackoverflow.com/questions/10162679/python-delete-element-from-heap
-    #            cantidadesHeap.remove(cantidad)                    
-
-                indexHeap = cantidadesHeap.index(cantidad)
-                print "---------------"
-                print cantidadesHeap
-                print "---------------"
-
-                cantidadesHeap[indexHeap] = cantidadesHeap[-1]
-                cantidadesHeap.pop()
-                heapq.heapify(h)
-                print "---------------"
-                print cantidadesHeap
-                print "---------------"
-
-
-            else:
-                dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
-                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
-                heapq.heappush(cantidadesHeap, cantidad)
-
-        else:
-            dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
-            if(cantidad != 1):
-                dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
-            heapq.heappush(cantidadesHeap, cantidad)
-
-    else:
-        dicCantidadTOperfilesTwitter[cantidad] = [perfilVisto]
-        heapq.heappush(cantidadesHeap, 1)
 
     agregar = registro(colaborador= nameColaborador ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
     agregar.save()
