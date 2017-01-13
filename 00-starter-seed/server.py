@@ -60,8 +60,9 @@ dicCantidadTOperfilesTwitter = {}
 
 def levantarPerfilesDeTwitter():
 #	filename = "/var/www/twitterAmostrarCopaArgentina.p"
-	filename = "bd/twitterAmostrar3.p"
-	if os.path.isfile(filename):
+#	filename = "bd/twitterAmostrar3.p"
+    filename = "bd/twitterAmostrarCopaArgentina.p"
+    if os.path.isfile(filename):
 		filehandler = open(filename,'rb')
 		dic = pickle.load(filehandler)
 		filehandler.close()
@@ -73,6 +74,8 @@ perfilesDeTwitter = levantarPerfilesDeTwitter()
 
 global posiblesClaves
 posiblesClaves = perfilesDeTwitter.keys()
+
+print "la cantidad de claves es " + str(len(posiblesClaves))
 
 global dicColaboradorToPerfilesVistos
 dicColaboradorToPerfilesVistos = {}
@@ -111,10 +114,13 @@ def obtenerPerfilAmirar(nameColaborador):
                 cantidadesHeap.add(cant)    
             for posibleClave in posiblesClaves:
                 if posibleClave not in vistosPorColaborador:
-                    if(bloq):
-                        bloq = False
-                    else:
-                        return posibleClave
+                    return posibleClave
+            print "no hay mas perfiles"
+
+                    # if(bloq):
+                    #     bloq = False
+                    # else:
+                    #     return posibleClave
 def armarMensaje(clave):
     global perfilesDeTwitter
     perfil = perfilesDeTwitter[clave]
@@ -246,7 +252,7 @@ def jugarPrimeraVez():
     dicColaboradorToprogessBar[nameColaborador] = 0 
     dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
 #    value = Markup(msg)
-    return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName)
+    return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName,cantidadPerfilesAnalizados = 0)
 
 
 @app.route('/yajugue', methods=['POST'])
@@ -285,9 +291,6 @@ def yajugue():
         elif(btn == "San Lorenzo"):
             equipoSeleccionado = "San Lorenzo"
             print "San Lorenzo"
-        # elif(btn == "Huracan"):
-        #     equipoSeleccionado = "Huracan"
-        #     print "Huracan"
         elif(btn == "Belgrano"):
             equipoSeleccionado = "Belgrano"
             print "Belgrano"
@@ -306,30 +309,6 @@ def yajugue():
         elif(btn == "Gimnasia"):
             equipoSeleccionado = "Gimnasia"
             print "Gimnasia"
-        # elif(btn == "Colon"):
-        #     equipoSeleccionado = "Colon"
-        #     print "Colon"
-        # elif(btn == "Velez"):
-        #     equipoSeleccionado = "Velez"
-        #     print "Velez"
-        # elif(btn == "Lanus"):
-        #     equipoSeleccionado = "Lanus"
-        #     print "Lanus"
-        # elif(btn == "Banfield"):
-        #     equipoSeleccionado = "Banfield"
-        #     print "Banfield"
-        # elif(btn == "Atletico Tucuman"):
-        #     equipoSeleccionado = "Atletico Tucuman"
-        #     print "Atletico Tucuman"
-        # elif(btn == "Temperley"):
-        #     equipoSeleccionado = "Temperley"
-        #     print "Temperley"
-        # elif(btn == "Union"):
-        #     equipoSeleccionado = "Union"
-        #     print "Union"
-        # elif(btn == "Tigre"):
-        #     equipoSeleccionado = "Tigre"
-        #     print "Tigre"
         else:
             print "boom"
     else:
@@ -362,48 +341,31 @@ def yajugue():
         cantidad = 1
     else:
         cantidad = dicperfilTwitterToCantidades[perfilVisto] + 1
+        print cantidad
+        print cantidadesHeap
         dicperfilTwitterToCantidades[perfilVisto] =  cantidad
         cantidadesHeap.add(cantidad)
-        cantidadesHeap.remove(cantidad - 1)
+        cantidadesHeap.remove(cantidad - 1)#OJO ACA
     if (cantidad in dicCantidadTOperfilesTwitter.keys()):
         print "cantidad aparece"
         if(cantidad > 3):
             print "no agarro el else"
             equipoDecidido = hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilVisto])
             if(equipoDecidido):
-                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
-                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
                 posiblesClaves.remove(perfilVisto)
                 cantidadesHeap.remove(cantidad)                    
             else:
-                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
-                # perfilesDeTwitterAagregar = perfilesDeTwitter.append(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
-
-                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
-                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
 
         else:
-            # print "agarro el else"
-            # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
-            # print perfilVisto
-            # print perfilesDeTwitter
             dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
-            # print dicCantidadTOperfilesTwitter[cantidad]
             if(cantidad != 1):
-                # print "entro a distinto"
-                # perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad-1]
-                # perfilesDeTwitterAagregar = perfilesDeTwitter.remove(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
 
     else:
-        # print "aca"
-        # print perfilVisto
         dicCantidadTOperfilesTwitter[cantidad] = [perfilVisto]
-        # print dicCantidadTOperfilesTwitter[cantidad]
-        # print "post aca"
 
 
     agregar = registro(colaborador= nameColaborador ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
@@ -420,7 +382,7 @@ def yajugue():
         msg, perfilDeTwitterScreenName = armarMensaje(perfilDeTwitterID)
         dicColaboradorToUltimoVisto[nameColaborador] = perfilDeTwitterID
         dicColaboradorToprogessBar[nameColaborador] = cantidadPerfilesAnalizados
-        return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName)
+        return render_template('jugar.html',env=env, perfiles = msg, nombreDelUsuario = perfilDeTwitterScreenName, cantidadPerfilesAnalizados=cantidadPerfilesAnalizados)
 
 @app.route('/callback')
 def callback_handling():
