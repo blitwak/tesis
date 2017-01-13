@@ -121,7 +121,7 @@ def obtenerPerfilAmirar(nameColaborador):
             print "---------------"
             print cantidadesHeap
             print "---------------"
-
+            print cantidad
             perfilesDeTwitter = dicCantidadTOperfilesTwitter[cantidad]
             for perilTwitter in perfilesDeTwitter:
                 if (perilTwitter not in vistosPorColaborador):
@@ -136,7 +136,7 @@ def obtenerPerfilAmirar(nameColaborador):
                         print "---------------"
                         print cantidadesHeap
                         print "---------------"
-
+                    heapq.heappush(cantidadesHeap, cantidadesHeap)
                     return perilTwitter
             cantidadAagregar.append(cantidad)
         else:
@@ -380,7 +380,7 @@ def yajugue():
     if(perfilVisto not in dicperfilTwitterToCantidades.keys()):
         dicperfilTwitterToCantidades[perfilVisto] = 1
 #        cantidadesHeap.add(1)
-        heapq.heappush(cantidadesHeap, 1)
+        # heapq.heappush(cantidadesHeap, 1)
         print "---------------"
         print cantidadesHeap
         print "---------------"
@@ -391,7 +391,7 @@ def yajugue():
         print cantidadesHeap
         dicperfilTwitterToCantidades[perfilVisto] =  cantidad
 #        cantidadesHeap.add(cantidad)
-        heapq.heappush(cantidadesHeap, cantidad)
+        # heapq.heappush(cantidadesHeap, cantidad)
 
         print "---------------"
         print cantidadesHeap
@@ -418,10 +418,6 @@ def yajugue():
         # print "---------------"
         # print cantidadesHeap
         # print "---------------"
-
-
-
-
 
     if (cantidad in dicCantidadTOperfilesTwitter.keys()):
         print "cantidad aparece"
@@ -453,23 +449,20 @@ def yajugue():
                 print "---------------"
 
 
-
-
-
-
-
             else:
                 dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
+                heapq.heappush(cantidadesHeap, cantidad)
 
         else:
             dicCantidadTOperfilesTwitter[cantidad].append(perfilVisto)
             if(cantidad != 1):
                 dicCantidadTOperfilesTwitter[cantidad-1].remove(perfilVisto)
+            heapq.heappush(cantidadesHeap, cantidad)
 
     else:
         dicCantidadTOperfilesTwitter[cantidad] = [perfilVisto]
-
+        heapq.heappush(cantidadesHeap, 1)
 
     agregar = registro(colaborador= nameColaborador ,perfilDeTwitter= perfilVisto,choice=equipoSeleccionado)
     agregar.save()
