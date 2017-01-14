@@ -18,6 +18,8 @@ import heapq
 #from flask import Markup
 #https://pythonhosted.
 
+# from gevent.wsgi import WSGIServer
+
 # Load Env variables
 env = None
 
@@ -220,6 +222,9 @@ def jugarPrimeraVez():
 	global dicColaboradorToTuplasSeleccionadas
 	global dicColaboradorToPerfilesVistos
 	global dicColaboradorToUltimoVisto
+	global dicColaboradorToprogessBar
+	global dicColaboradorToUltimoVisto
+
 
 	nameColaborador = session[constants.PROFILE_KEY]['nickname']
 	print nameColaborador
@@ -250,6 +255,9 @@ def jugarPrimeraVez():
 def yajugue():
     global dicColaboradorToTuplasSeleccionadas
     global dicColaboradorToprogessBar
+    global posiblesClaves
+    global dicColaboradorToPerfilesVistos
+    global dicidTwitterCuentaToVotacion
 
     formulario = request.form
     if("btn1" in formulario):
@@ -303,6 +311,8 @@ def yajugue():
 
     [perfilDeTwitterID,perfilDeTwitterScreenName] = dicColaboradorToUltimoVisto[nameColaborador]
     print perfilDeTwitterID
+
+
 
     dicColaboradorToPerfilesVistos[nameColaborador].append(perfilDeTwitterID)
     dicColaboradorToTuplasSeleccionadas[nameColaborador].append([perfilDeTwitterID,equipoSeleccionado])
@@ -365,4 +375,6 @@ def callback_handling():
     return redirect('/index')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=os.environ.get('PORT', 3000))
+	app.run(host='0.0.0.0', port=os.environ.get('PORT', 3000))
+	# http_server = WSGIServer(('', 3000), app)
+	# http_server.serve_forever()
