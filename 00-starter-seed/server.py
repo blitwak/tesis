@@ -47,6 +47,12 @@ class registro(db.Document):
     choice = db.StringField()
     perfilDeTwitterScreenName = db.StringField()
 
+class perfilesBD (db.Document):
+	perfilDeTwitterScreenName = db.StringField()
+	perfilDeTwitterID = db.IntField()
+	yaDecidido = db.BoolField()
+
+
 #db.registro.find().count()
 #use test
 #mongo --shell
@@ -83,6 +89,14 @@ perfilesDeTwitter = levantarPerfilesDeTwitter()
 
 global posiblesClaves
 posiblesClaves = perfilesDeTwitter.keys()
+
+for perfilDeTwitterKEY in posiblesClaves:
+	perfilDeTwitterScreenName1 = perfilesDeTwitter[perfilDeTwitterKEY][1]
+	print perfilDeTwitterScreenName1
+	yaDecidido1 = False
+	unPerfilBD = perfilesBD(perfilDeTwitterScreenName = perfilDeTwitterScreenName1, perfilDeTwitterID= perfilDeTwitterKEY, yaDecidido = yaDecidido1)
+	unPerfilBD.save()
+
 
 print "la cantidad de claves es " + str(len(posiblesClaves))
 
@@ -137,7 +151,7 @@ def hayMayoriaDeEquipo(listaVotacion):
         else:
             equipoSeleccionado[equipo] = 1
     cantVotantes = len(listaVotacion)
-    limite = cantVotantes * 0.75
+    limite = cantVotantes * 0.8
     for votado in equipoSeleccionado.keys():
         cantidadVotos = equipoSeleccionado[votado]
         if(cantidadVotos >= limite):
@@ -323,13 +337,22 @@ def yajugue():
     elementito = [nameColaborador,equipoSeleccionado]
     dicidTwitterCuentaToVotacion[perfilDeTwitterID].append(elementito)
 
-    # HACER LA MAGIA DE COLABORADR
     if( len(dicidTwitterCuentaToVotacion[perfilDeTwitterID]) > 10):
         posiblesClaves.remove(perfilDeTwitterID)
-    elif( len(dicidTwitterCuentaToVotacion[perfilDeTwitterID]) > 3):
-        if(hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilDeTwitterID])):
-            #borro de posibles claves
-            posiblesClaves.remove(perfilDeTwitterID)
+
+        aModificar = perfilesBD.query.filter(perfilesBD.perfilDeTwitterID == perfilDeTwitterID).first()
+        aModificar.yaDecidido = True
+        aModificar.save()
+
+	elif( len(dicidTwitterCuentaToVotacion[perfilDeTwitterID]) > 4):
+		if(hayMayoriaDeEquipo(dicidTwitterCuentaToVotacion[perfilDeTwitterID])):
+			#borro de posibles claves
+			posiblesClaves.remove(perfilDeTwitterID)
+			aModificar = perfilesBD.query.filter(perfilesBD.perfilDeTwitterID == perfilDeTwitterID).first()
+			aModificar.yaDecidido = True
+			aModificar.save()
+
+
 
 
     agregar = registro(colaborador= nameColaborador ,perfilDeTwitterID= perfilDeTwitterID,choice=equipoSeleccionado,perfilDeTwitterScreenName = perfilDeTwitterScreenName)
@@ -375,6 +398,7 @@ def callback_handling():
     return redirect('/index')
 
 if __name__ == "__main__":
+
 	app.run(host='0.0.0.0', port=os.environ.get('PORT', 3000))
 	# http_server = WSGIServer(('', 3000), app)
 	# http_server.serve_forever()
