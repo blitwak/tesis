@@ -4,7 +4,7 @@ from flask import Flask
 from functools import wraps
 from dotenv import Dotenv
 import json
-import preparar as preparar
+#import preparar as preparar
 import pickle
 import os.path
 import os
