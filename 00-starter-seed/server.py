@@ -278,6 +278,7 @@ def yajugue():
 	global dicidTwitterCuentaToVotacion
 
 	formulario = request.form
+	equipoSeleccionado = ""
 	if("btn1" in formulario):
 		btn=request.form['btn1']
 		print btn
@@ -320,6 +321,9 @@ def yajugue():
 		elif(btn == "Gimnasia"):
 			equipoSeleccionado = "Gimnasia"
 			print "Gimnasia"
+		elif(btn == "Lanus"):
+			equipoSeleccionado = "Lanus"
+			print "Lanus"
 		else:
 			print "boom"
 	else:

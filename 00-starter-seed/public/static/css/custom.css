@@ -83,9 +83,10 @@ body {
     /*background-image:url(../public/static/imagenes/equiposbotones/sanlorenzo.png); height: 65px; width:67px; background-color: transparent; border: transparent;*/
     /*background-image:url(../imagenes/equiposbotones/Boca.png);*/
     height: 65px;
-    width:67px;
+    width:58px;
     background-color: transparent;
     border: transparent;
+    padding: 8px 29px;
 }
 @media (max-width: 991px) {
     .profile-img {

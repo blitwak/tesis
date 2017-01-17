@@ -123,6 +123,11 @@
                                         <br>
                                         <label id="lbl13"></label>
                                     </li>
+                                    <li>
+                                        <button name= "btn1"   title=""   id="btn14" type="submit" class="btn btn-default btn-equipos"></button>
+                                        <br>
+                                        <label id="lbl14"></label>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -147,8 +152,9 @@
 
                     return array;
                 }
-                var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Belgrano","Talleres","Rosario central","Newell's","Estudiantes","Gimnasia"]
-
+//                var teams = ["No se", "Ninguno", "Boca", "River", "Racing","Independiente","San Lorenzo","Belgrano","Talleres","Rosario central","Newell's","Estudiantes","Gimnasia","Lanus"]
+                  var teams = ["Boca", "River", "Racing","Independiente","San Lorenzo","Belgrano","Talleres","Rosario central","Newell's","Estudiantes","Gimnasia","Lanus"]
+//"No se", "Ninguno"
                 teams = shuffle(teams);
 
                 for (i = 0; i < teams.length; i++) {
@@ -164,6 +170,27 @@
                     path = 'url(../public/static/imagenes/equiposbotones/'+texto+'.png)';
                    $(nombrebtn).css("background-image", path);
                 }
+                //"No se", "Ninguno"
+                texto = "No se";
+                $('#btn13').attr('title', "No se");
+                $('#btn13').attr('value', "No se");
+                $('#lbl13').text("No se");
+                texto = texto.replace(/ /g ,"_");
+                texto = texto.replace("'","_");
+                path = 'url(../public/static/imagenes/equiposbotones/'+texto+'.png)';
+                $('#btn13').css("background-image", path);
+
+                texto = "Ninguno";
+                $('#btn14').attr('title', "Ninguno");
+                $('#btn14').attr('value', "Ninguno");
+                $('#lbl14').text("Ninguno");
+                texto = texto.replace(/ /g ,"_");
+                texto = texto.replace("'","_");
+                path = 'url(../public/static/imagenes/equiposbotones/'+texto+'.png)';
+                $('#btn14').css("background-image", path);
+
+
+
             </script>
 
             <div class="row" style="margin-top: 10px;">
@@ -262,6 +289,12 @@
                     <br>
                     <label id="blbl13"></label>
                 </li>
+                <li>
+                    <button name= "btn1"   title=""   id="bbtn14" type="submit" class="btn btn-default btn-equipos"></button>
+                    <br>
+                    <label id="blbl14"></label>
+                </li>
+
             </ul>
         </div>
     </div>
